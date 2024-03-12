@@ -1,4 +1,4 @@
-package org.danilopianini.template
+package io.github.zuccherosintattico.gradle
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -17,10 +17,10 @@ import java.io.Serializable
 /**
  * Just a template.
  */
-open class HelloGradle : Plugin<Project> {
-    override fun apply(target: Project) {
-        val extension = target.extensions.create<HelloExtension>("hello")
-        target.tasks.register<HelloTask>("hello") {
+open class Typescript : Plugin<Project> {
+    override fun apply(project: Project) {
+        val extension = project.extensions.create<TypescriptExtension>("typescript")
+        project.tasks.register<TypescriptTask>("hello") {
             author.set(extension.author)
         }
     }
@@ -29,7 +29,7 @@ open class HelloGradle : Plugin<Project> {
 /**
  * Just a template.
  */
-open class HelloTask : DefaultTask() {
+open class TypescriptTask : DefaultTask() {
 
     /**
      * Just a template.
@@ -55,7 +55,7 @@ open class HelloTask : DefaultTask() {
 /**
  * Just a template.
  */
-open class HelloExtension(objects: ObjectFactory) : Serializable {
+open class TypescriptExtension(objects: ObjectFactory) : Serializable {
 
     /**
      * Just a template.

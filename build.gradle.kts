@@ -20,15 +20,15 @@ plugins {
 /*
  * Project information
  */
-group = "org.danilopianini"
-description = "A template repository for kickstarting Gradle Plugins"
+group = "io.github.zuccherosintattico"
+description = "Simple Gradle plugin for automatic typescript build"
 inner class ProjectInfo {
-    val longName = "Template for Gradle Plugins"
-    val website = "https://github.com/DanySK/$name"
+    val longName = "Gradle plugin for typescript"
+    val website = "https://github.com/zucchero-sintattico/$name"
     val vcsUrl = "$website.git"
     val scm = "scm:git:$website.git"
-    val pluginImplementationClass = "$group.template.HelloGradle"
-    val tags = listOf("template", "kickstart", "example")
+    val pluginImplementationClass = "$group.gradle.Typescript"
+    val tags = listOf("typescript", "plugin", "gradle")
 }
 val info = ProjectInfo()
 
@@ -114,8 +114,8 @@ publishOnCentral {
     projectDescription.set(description ?: TODO("Missing description"))
     projectUrl.set(info.website)
     scmConnection.set(info.scm)
-    repository("https://maven.pkg.github.com/DanySK/${rootProject.name}".lowercase(), name = "github") {
-        user.set("danysk")
+    repository("https://maven.pkg.github.com/zucchero-sintattico/${rootProject.name}".lowercase(), name = "github") {
+        user.set(System.getenv("GITHUB_ACTOR"))
         password.set(System.getenv("GITHUB_TOKEN"))
     }
     publishing {
@@ -124,9 +124,9 @@ publishOnCentral {
                 pom {
                     developers {
                         developer {
-                            name.set("Danilo Pianini")
-                            email.set("danilo.pianini@gmail.com")
-                            url.set("http://www.danilopianini.org/")
+                            name.set("Zucchero Sintattico")
+                            email.set("zsintattico@gmail.com")
+                            url.set("https://zucchero-sintattico.github.io")
                         }
                     }
                 }
