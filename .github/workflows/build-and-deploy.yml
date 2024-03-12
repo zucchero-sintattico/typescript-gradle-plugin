@@ -17,25 +17,29 @@ jobs:
       - name: Checkout
         uses: DanySK/action-checkout@0.2.14
       - uses: DanySK/build-check-deploy-gradle-action@2.4.6
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           # Dry-deployment
           check-command: ./gradlew build --parallel
-          deploy-command: >-
-            ./gradlew
-            uploadKotlinOSSRHToMavenCentralNexus
-            uploadPluginMavenToMavenCentralNexus
-            uploadPluginMarkerMavenToMavenCentralNexus
-            close
-            drop
-            --parallel
+#          deploy-command: >-
+#            ./gradlew
+#            uploadKotlinOSSRHToMavenCentralNexus
+#            uploadPluginMavenToMavenCentralNexus
+#            uploadPluginMarkerMavenToMavenCentralNexus
+#            close
+#            drop
+#            --parallel
           should-run-codecov: ${{ runner.os == 'Linux' }}
-          should-deploy: >-
-            ${{
-              runner.os == 'Linux'
-              && !github.event.repository.fork
-              && github.event_name != 'pull_request'
-            }}
-          maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          should-deploy: false
+#          should-deploy: >-
+#            ${{
+#              runner.os == 'Linux'
+#              && !github.event.repository.fork
+#              && github.event_name != 'pull_request'
+#            }}
+#          maven-central-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+#          maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           signing-key: ${{ secrets.SIGNING_KEY }}
           signing-password: ${{ secrets.SIGNING_PASSWORD }}
   release:
@@ -54,8 +58,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
-        with:
-          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+#        with:
+#          token: ${{ secrets.DEPLOYMENT_TOKEN }}
       - name: Find the version of Node from package.json
         id: node-version
         run: echo "version=$(jq -r .engines.node package.json)" >> $GITHUB_OUTPUT
@@ -75,8 +79,8 @@ jobs:
           github-token: ${{ github.token }}
           gradle-publish-secret: ${{ secrets.GRADLE_PUBLISH_SECRET }}
           gradle-publish-key: ${{ secrets.GRADLE_PUBLISH_KEY }}
-          maven-central-username: 'zucchero-sintattico'
-          maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+#          maven-central-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+#          maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           signing-key: ${{ secrets.SIGNING_KEY }}
           signing-password: ${{ secrets.SIGNING_PASSWORD }}
   success:

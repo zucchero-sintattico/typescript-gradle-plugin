@@ -28,7 +28,7 @@ inner class ProjectInfo {
     val vcsUrl = "$website.git"
     val scm = "scm:git:$website.git"
     val pluginImplementationClass = "$group.gradle.Typescript"
-    val tags = listOf("typescript", "plugin", "gradle")
+    val tags = listOf("typescript", "compilation")
 }
 val info = ProjectInfo()
 
@@ -110,10 +110,13 @@ signing {
  * Publication on Maven Central and the Plugin portal
  */
 publishOnCentral {
+    configureMavenCentral.set(false) // Waiting for support for new central portal
+
     projectLongName.set(info.longName)
     projectDescription.set(description ?: TODO("Missing description"))
     projectUrl.set(info.website)
     scmConnection.set(info.scm)
+    group = "io.github.zucchero-sintattico"
     repository("https://maven.pkg.github.com/zucchero-sintattico/${rootProject.name}".lowercase(), name = "github") {
         user.set(System.getenv("GITHUB_ACTOR"))
         password.set(System.getenv("GITHUB_TOKEN"))
