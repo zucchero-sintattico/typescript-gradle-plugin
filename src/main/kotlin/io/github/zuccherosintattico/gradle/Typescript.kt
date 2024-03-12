@@ -20,8 +20,12 @@ import java.io.Serializable
 open class Typescript : Plugin<Project> {
     override fun apply(project: Project) {
         val extension = project.extensions.create<TypescriptExtension>("typescript")
-        project.tasks.register<TypescriptTask>("hello") {
-            author.set(extension.author)
+
+        val checkNodeTask = project.tasks.register<CheckNodeTask>("checkNode")
+
+        project.tasks.register<TypescriptTask>("compileTypescript") {
+            dependsOn(checkNodeTask)
+            sourceSet.set(extension.sourceSet)
         }
     }
 }
@@ -35,13 +39,13 @@ open class TypescriptTask : DefaultTask() {
      * Just a template.
      */
     @Input
-    val author: Property<String> = project.objects.property()
+    val sourceSet: Property<String> = project.objects.property()
 
     /**
      * Read-only property calculated from the greeting.
      */
     @Internal
-    val message: Provider<String> = author.map { "Hello from $it" }
+    val message: Provider<String> = sourceSet.map { "Hello from $it" }
 
     /**
      * Just a template.
@@ -60,7 +64,7 @@ open class TypescriptExtension(objects: ObjectFactory) : Serializable {
     /**
      * Just a template.
      */
-    val author: Property<String> = objects.property()
+    val sourceSet: Property<String> = objects.property<String>().convention("src/main/typescript")
 
     companion object {
         private const val serialVersionUID = 1L
