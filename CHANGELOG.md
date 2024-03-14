@@ -1,3 +1,11 @@
+## 1.0.0 (2024-03-14)
+
+
+### Features
+
+* **plugin:** add first try of task ([32b23d6](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/32b23d684bf404cdc7208e9ede5a6a39469792c0))
+* **repo:** modify initial variables ([78b9fcb](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/78b9fcbedb0345f81b1fe8642e6e66b3f3a51d5f))
+
 ## [2.0.6](https://github.com/DanySK/template-for-gradle-plugins/compare/2.0.5...2.0.6) (2024-03-07)
 
 
