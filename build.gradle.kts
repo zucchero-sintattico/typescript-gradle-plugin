@@ -41,6 +41,7 @@ repositories {
 }
 
 multiJvm {
+    jvmVersionForCompilation.set(17)
     maximumSupportedJvmVersion.set(latestJavaSupportedByGradle)
 }
 
@@ -52,6 +53,7 @@ dependencies {
     testImplementation(libs.konf.yaml)
     testImplementation(libs.classgraph)
     testImplementation(libs.bundles.kotlin.testing)
+    implementation(libs.turtle)
 }
 
 // Enforce Kotlin version coherence

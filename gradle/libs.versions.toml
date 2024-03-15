@@ -12,6 +12,7 @@ kotest-junit5-jvm = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref
 kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
 kotlin-gradle-plugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 testkit = { module = "io.github.mirko-felice.testkit:core", version.ref = "testkit" }
+turtle = "com.lordcodes.turtle:turtle:0.9.0"
 
 [bundles]
 kotlin-testing = [ "kotest-junit5-jvm", "kotest-assertions-core-jvm" ]
