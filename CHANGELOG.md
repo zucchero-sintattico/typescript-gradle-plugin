@@ -1,3 +1,22 @@
+## [1.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/1.0.0...1.1.0) (2024-03-15)
+
+
+### Features
+
+* **deps:** add turtle for cli utility ([78f7873](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/78f787313f988e2cec1ef2e74c89941795b6017c))
+* **release:** zucchero-sintattico successfully migrated to legacy OSSRH ([964952a](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/964952a315f4922d642af2fff9d697ff7a4fcd12))
+
+
+### Bug Fixes
+
+* **publishing:** try to make compliant to gradle plugin portal ([1db3eef](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/1db3eef23e5460274ca90123bd7c689d3df7cce0))
+
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.7 ([bbaaf08](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/bbaaf08d38fd20391868f96a309d59c95650d76f))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.8 ([2c9b315](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/2c9b31510f06e71965711e1f8c054f37aae48752))
+
 ## 1.0.0 (2024-03-14)
 
 
