@@ -143,7 +143,7 @@ publishOnCentral {
 gradlePlugin {
     plugins {
         website.set(info.website)
-        vcsUrl.set(info.vcsUrl)
+        vcsUrl.set(info.website) // vcsUrl.set(info.vcsUrl)
         create("") {
             id = "$group.${project.name}"
             displayName = info.longName
