@@ -1,6 +1,7 @@
 package io.github.zuccherosintattico.gradle
 
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.collections.shouldContainAll
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
@@ -44,16 +45,19 @@ class TypescriptPluginTest : AnnotationSpec() {
             build()
         }
 
-    @Test
-    fun `test the plugin`() {
-        val testFolder = getTempDirectoryWithResources()
-        val result = testFolder.executeGradleTask("compileTypescript", "--stacktrace")
-        result.output.lines().forEach { println(it) }
+    private fun Path.stringWalk(): List<String> = toFile().walk().map { it.relativeTo(toFile()).toString() }.toList()
 
-//        ProcessBuilder("npx", "tsc", "--outDir", "./build/bin", "src/main/typescript/*.ts")
-//            .directory(folder.toFile())
-//            .inheritIO()
-//            .start()
-//            .waitFor()
+    @Test
+    fun `test base configuration`() {
+        val testFolder = getTempDirectoryWithResources()
+        testFolder.executeGradleTask("compileTypescript", "--stacktrace")
+
+        testFolder.stringWalk() shouldContainAll listOf(
+            "build/dist",
+            "build/dist/index.js",
+            "build/dist/person.js",
+            "node_modules",
+            "package-lock.json",
+        )
     }
 }

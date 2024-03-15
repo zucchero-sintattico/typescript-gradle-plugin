@@ -1,5 +1,7 @@
 package io.github.zuccherosintattico.gradle
 
+import com.lordcodes.turtle.shellRun
+import io.github.zuccherosintattico.utils.NodeCommandsExtension.nodeVersion
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
@@ -17,11 +19,8 @@ open class CheckNodeTask : DefaultTask() {
      */
     @TaskAction
     fun checkNode() {
-        val res = Runtime.getRuntime().runCatching { exec("node --version").waitFor() }
-        if (res.isSuccess) {
-            logger.quiet("Node is installed")
-        } else {
-            logger.error("Node is not installed")
-        }
+        runCatching { shellRun { nodeVersion() } }
+            .onSuccess { logger.quiet("Node is installed at version $it") }
+            .onFailure { logger.error("Node is not installed") }
     }
 }
