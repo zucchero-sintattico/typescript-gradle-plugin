@@ -45,19 +45,19 @@ class TypescriptPluginTest : AnnotationSpec() {
             build()
         }
 
-    private fun Path.stringWalk(): List<String> = toFile().walk().map { it.relativeTo(toFile()).toString() }.toList()
+    private fun Path.walkRelative(): List<File> = toFile().walk().map { it.relativeTo(toFile()) }.toList()
 
     @Test
     fun `test base configuration`() {
         val testFolder = getTempDirectoryWithResources()
         testFolder.executeGradleTask("compileTypescript", "--stacktrace")
 
-        testFolder.stringWalk() shouldContainAll listOf(
+        testFolder.walkRelative() shouldContainAll listOf(
             "build/dist",
             "build/dist/index.js",
             "build/dist/person.js",
             "node_modules",
             "package-lock.json",
-        )
+        ).map { File(it) }
     }
 }
