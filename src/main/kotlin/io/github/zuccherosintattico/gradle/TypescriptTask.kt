@@ -3,6 +3,7 @@ package io.github.zuccherosintattico.gradle
 import com.lordcodes.turtle.shellRun
 import io.github.zuccherosintattico.utils.NpmCommandsExtension.npxCommand
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
@@ -30,9 +31,8 @@ abstract class TypescriptTask : DefaultTask() {
      */
     @TaskAction
     fun compileTypescript() {
-        logger.quiet("Compiling TypeScript files in ${entrypoint.get()}")
-        shellRun(project.projectDir) {
-            npxCommand("tsc", "--outDir", buildDir.get(), entrypoint.get())
-        }.also { logger.quiet("Compiled: $it") }
+        runCatching { shellRun(project.projectDir) { npxCommand("tsc", "--outDir", buildDir.get(), entrypoint.get()) } }
+            .onSuccess { logger.quiet("Compiled: $it") }
+            .onFailure { throw GradleException("Failed to compile TypeScript files: $it") }
     }
 }

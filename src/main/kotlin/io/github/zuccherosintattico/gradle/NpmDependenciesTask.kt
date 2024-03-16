@@ -3,12 +3,21 @@ package io.github.zuccherosintattico.gradle
 import com.lordcodes.turtle.shellRun
 import io.github.zuccherosintattico.utils.NpmCommandsExtension.npmInstall
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction
 
 /**
  * A task to install NPM dependencies.
  */
 open class NpmDependenciesTask : DefaultTask() {
+
+    companion object {
+        /**
+         * The error message when package.json is not found.
+         */
+        const val PACKAGE_JSON_ERROR = "package.json not found"
+    }
+
     init {
         group = "Node"
         description = "Install NPM dependencies"
@@ -19,8 +28,11 @@ open class NpmDependenciesTask : DefaultTask() {
      */
     @TaskAction
     fun installNpmDependencies() {
-        logger.quiet("Installing NPM dependencies")
-        val out = shellRun(project.projectDir) { npmInstall() }
-        logger.quiet(out)
+        if (!project.file("package.json").exists()) {
+            throw GradleException(PACKAGE_JSON_ERROR)
+        }
+        runCatching { shellRun(project.projectDir) { npmInstall() } }
+            .onSuccess { logger.quiet("Installed NPM dependencies") }
+            .onFailure { throw GradleException("Failed to install NPM dependencies: $it") }
     }
 }

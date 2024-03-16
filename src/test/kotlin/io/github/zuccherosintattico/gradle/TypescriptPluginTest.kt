@@ -1,9 +1,12 @@
 package io.github.zuccherosintattico.gradle
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.string.shouldContain
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.UnexpectedBuildFailure
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -50,7 +53,7 @@ class TypescriptPluginTest : AnnotationSpec() {
     @Test
     fun `test base configuration`() {
         val testFolder = getTempDirectoryWithResources()
-        testFolder.executeGradleTask("compileTypescript", "--stacktrace")
+        testFolder.executeGradleTask("compileTypescript")
 
         testFolder.walkRelative() shouldContainAll listOf(
             "build/dist",
@@ -59,5 +62,14 @@ class TypescriptPluginTest : AnnotationSpec() {
             "node_modules",
             "package-lock.json",
         ).map { File(it) }
+    }
+
+    @Test
+    fun `test missing package json`() {
+        val testFolder = getTempDirectoryWithResources("src/test/resources/missing-package-json-env")
+
+        shouldThrow<UnexpectedBuildFailure> {
+            testFolder.executeGradleTask("compileTypescript")
+        }.message shouldContain NpmDependenciesTask.PACKAGE_JSON_ERROR
     }
 }
