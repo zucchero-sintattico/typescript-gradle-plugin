@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/2.0.0...2.1.0) (2024-03-16)
+
+
+### Features
+
+* **test:** add cleaner error handling on package json failure ([22f3cd7](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/22f3cd786fc891c52c619fb0948a935e25aa072f))
+
 ## [2.0.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/1.0.0...2.0.0) (2024-03-15)
 
 
