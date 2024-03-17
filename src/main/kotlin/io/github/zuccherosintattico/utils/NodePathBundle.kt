@@ -53,6 +53,12 @@ internal data class NodePathBundle(
             }
         }
 
+        private fun Path.adjustPathForWindows(): String = if (System.getProperty("os.name").contains(WINDOWS)) {
+            this.toString().replace("\\", "/")
+        } else {
+            this.toString()
+        }
+
         /**
          * Load the node, npm, and npx paths from the given properties file.
          */
@@ -73,9 +79,9 @@ internal data class NodePathBundle(
      */
     fun saveToPropertiesFile(propertiesFile: Path) {
         val nodePaths = mapOf(
-            "node" to node.toString(),
-            "npm" to npm.toString(),
-            "npx" to npx.toString(),
+            "node" to node.adjustPathForWindows(),
+            "npm" to npm.adjustPathForWindows(),
+            "npx" to npx.adjustPathForWindows(),
         )
         propertiesFile.writeText(nodePaths.entries.joinToString("\n") { (k, v) -> "$k=$v" })
     }
