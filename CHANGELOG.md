@@ -1,3 +1,20 @@
+## [3.0.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/2.1.0...3.0.0) (2024-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node-install:** add possibility to install local node via plugin
+
+### Features
+
+* **node-install:** add possibility to install local node via plugin ([05e52f1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/05e52f1c05a2b606cc7f9d68c20a70277dbb4bca))
+* **utility:** add a simple archive extract for zip and tar gz, and utility to get endpoint for node distribution to download ([3c73942](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/3c739427c1d8d7ed10c04090564d9caa48997873))
+
+
+### Bug Fixes
+
+* **file-paths:** windows stuffs ([2b6c825](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/2b6c825dd2e8c5cc6a5abe2488e8674afb577ebc))
+
 ## [2.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/2.0.0...2.1.0) (2024-03-16)
 
 
