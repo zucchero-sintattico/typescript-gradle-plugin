@@ -72,4 +72,13 @@ class TypescriptPluginTest : AnnotationSpec() {
             testFolder.executeGradleTask("compileTypescript")
         }.message shouldContain NpmDependenciesTask.PACKAGE_JSON_ERROR
     }
+
+    @Test
+    fun `test node download`() {
+        val testFolder = getTempDirectoryWithResources("src/test/resources/download-node-env")
+
+        testFolder
+            .executeGradleTask("checkNode", "checkNode")
+            .output shouldContain "Node is installed at version v20.7.0" // version set in tested env
+    }
 }

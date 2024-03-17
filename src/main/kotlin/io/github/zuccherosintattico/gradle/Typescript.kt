@@ -11,15 +11,20 @@ import org.gradle.kotlin.dsl.register
  */
 open class Typescript : Plugin<Project> {
     override fun apply(project: Project) {
-        val extension = project.extensions.create<TypescriptExtension>("typescript")
-        val checkNodeTask = project.registerTask<CheckNodeTask>("checkNode")
+        val nodeExtension = project.extensions.create<NodeExtension>("node")
+        val typescriptExtension = project.extensions.create<TypescriptExtension>("typescript")
+        val checkNodeTask = project.registerTask<CheckNodeTask>("checkNode") {
+            shouldInstall.set(nodeExtension.shouldInstall)
+            zipUrl.set(nodeExtension.zipUrl)
+            version.set(nodeExtension.version)
+        }
         val npmDependenciesTask = project.registerTask<NpmDependenciesTask>("npmDependencies") {
             dependsOn(checkNodeTask)
         }
         project.registerTask<TypescriptTask>("compileTypescript") {
             dependsOn(npmDependenciesTask)
-            entrypoint.set(extension.entrypoint)
-            buildDir.set(extension.outputDir)
+            entrypoint.set(typescriptExtension.entrypoint)
+            buildDir.set(typescriptExtension.outputDir)
         }
     }
 

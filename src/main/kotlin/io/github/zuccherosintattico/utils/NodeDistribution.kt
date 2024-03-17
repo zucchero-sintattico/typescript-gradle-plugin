@@ -37,8 +37,10 @@ internal object NodeDistribution {
     private val osArch: String = System.getProperty("os.arch").let {
         when {
             it.equals("aarch64") -> "arm64"
-            it.contains("x64") -> "x64"
-            it.contains("32") -> "x86"
+            it.contains("x64") ||
+                it.contains("amd64") ||
+                it.contains("x86_64") -> "x64"
+            it.contains("x32") -> "x86"
             else -> throw PlatformError("Unsupported architecture: $it")
         }
     }
