@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.0.0...3.0.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* **typescript:** annotation for output directory ([545f7e7](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/545f7e7215be41c33a6dba74ff849c366914acbb))
+
 ## [3.0.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/2.1.0...3.0.0) (2024-03-17)
 
 
