@@ -54,6 +54,7 @@ dependencies {
     testImplementation(libs.classgraph)
     testImplementation(libs.bundles.kotlin.testing)
     implementation(libs.turtle)
+    implementation(libs.compress)
 }
 
 // Enforce Kotlin version coherence

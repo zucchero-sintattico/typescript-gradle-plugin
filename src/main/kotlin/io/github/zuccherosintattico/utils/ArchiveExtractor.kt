@@ -1,19 +1,17 @@
 package io.github.zuccherosintattico.utils
 
-import org.gradle.internal.impldep.org.apache.tools.tar.TarEntry
-import org.gradle.internal.impldep.org.apache.tools.tar.TarInputStream
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream
 import java.io.BufferedInputStream
-import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.zip.GZIPInputStream
-import java.util.zip.ZipEntry
-import java.util.zip.ZipInputStream
 
 internal object ArchiveExtractor {
 
@@ -27,29 +25,31 @@ internal object ArchiveExtractor {
     @Suppress("NestedBlockDepth")
     fun extractTarGz(archiveFile: File, destinationDir: File): Path {
         FileInputStream(archiveFile).use { fileIn ->
-            GZIPInputStream(BufferedInputStream(fileIn)).use { gzipIn ->
-                TarInputStream(BufferedInputStream(gzipIn)).use { tarIn ->
-                    var entry: TarEntry? = tarIn.nextEntry
-                    while (entry != null) {
-                        val entryFile = File(destinationDir, entry.name)
-                        if (entry.isDirectory) {
-                            entryFile.mkdirs()
-                        } else if (entry.isSymbolicLink) {
-                            val linkTarget = Paths.get(entry.linkName)
-                            Files.createSymbolicLink(entryFile.toPath(), linkTarget)
-                        } else {
-                            entryFile.parentFile?.mkdirs()
-                            BufferedOutputStream(FileOutputStream(entryFile)).use { out ->
-                                tarIn.copyTo(out)
+            BufferedInputStream(fileIn).use { bufferedIn ->
+                GZIPInputStream(bufferedIn).use { gzipIn ->
+                    TarArchiveInputStream(gzipIn).use { tarIn ->
+                        var entry: TarArchiveEntry? = tarIn.nextEntry
+                        while (entry != null) {
+                            if (entry.isDirectory) {
+                                Files.createDirectories(destinationDir.toPath().resolve(entry.name))
+                            } else if (entry.isSymbolicLink) {
+                                val linkTarget = Paths.get(entry.linkName)
+                                Files.createSymbolicLink(destinationDir.resolve(entry.name).toPath(), linkTarget)
+                            } else {
+                                val entryFile = destinationDir.resolve(entry.name)
+                                Files.createDirectories(entryFile.parentFile.toPath())
+                                FileOutputStream(entryFile).use { fileOut ->
+                                    tarIn.copyTo(fileOut)
+                                }
                             }
+                            entry = tarIn.nextEntry
                         }
-                        entry = tarIn.nextEntry
                     }
                 }
             }
         }
-        val filename = archiveFile.name.replace(NodeDistribution.SupportedExtensions.TAR_GZ, "")
-        return destinationDir.resolve(filename).toPath()
+        val extractedDir = archiveFile.nameWithoutExtension.replace(".tar", "")
+        return destinationDir.resolve(extractedDir).toPath()
     }
 
     /**
@@ -61,28 +61,24 @@ internal object ArchiveExtractor {
      */
     @Suppress("NestedBlockDepth", "MagicNumber")
     fun extractZip(zipFile: File, destinationDir: File): Path {
-        val buffer = ByteArray(1024)
-        try {
-            ZipInputStream(BufferedInputStream(FileInputStream(zipFile))).use { zis ->
-                var entry: ZipEntry? = zis.nextEntry
-                while (entry != null) {
-                    val entryFile = File(destinationDir, entry.name)
-                    if (entry.isDirectory) {
-                        entryFile.mkdirs()
-                    } else {
-                        entryFile.parentFile?.mkdirs()
-                        BufferedOutputStream(FileOutputStream(entryFile)).use { fos ->
-                            var len: Int
-                            while (zis.read(buffer).also { len = it } > 0) {
-                                fos.write(buffer, 0, len)
+        FileInputStream(zipFile).use { fileIn ->
+            BufferedInputStream(fileIn).use { bufferedIn ->
+                ZipArchiveInputStream(bufferedIn).use { zipIn ->
+                    var entry: ZipArchiveEntry? = zipIn.nextEntry
+                    while (entry != null) {
+                        if (entry.isDirectory) {
+                            File(destinationDir, entry.name).mkdirs()
+                        } else {
+                            val entryFile = File(destinationDir, entry.name)
+                            entryFile.parentFile?.mkdirs()
+                            FileOutputStream(entryFile).use { fileOut ->
+                                zipIn.copyTo(fileOut)
                             }
                         }
+                        entry = zipIn.nextEntry
                     }
-                    entry = zis.nextEntry
                 }
             }
-        } catch (e: IOException) {
-            throw IllegalStateException("Error while extracting zip file: ${e.message}", e)
         }
         return destinationDir.resolve(zipFile.nameWithoutExtension).toPath()
     }
