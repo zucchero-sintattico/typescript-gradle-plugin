@@ -78,7 +78,7 @@ class TypescriptPluginTest : AnnotationSpec() {
         val testFolder = getTempDirectoryWithResources("src/test/resources/download-node-env")
 
         testFolder
-            .executeGradleTask("checkNode", "checkNode")
+            .executeGradleTask("checkNode")
             .output shouldContain "Node is installed at version v20.7.0" // version set in tested env
     }
 }
