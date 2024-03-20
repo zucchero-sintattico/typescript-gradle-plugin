@@ -1,7 +1,8 @@
 package io.github.zuccherosintattico.utils
 
-import io.github.zuccherosintattico.utils.NodeDistribution.SupportedSystem.MAC
-import io.github.zuccherosintattico.utils.NodeDistribution.SupportedSystem.WINDOWS
+import io.github.zuccherosintattico.utils.Platform.LINUX
+import io.github.zuccherosintattico.utils.Platform.MAC
+import io.github.zuccherosintattico.utils.Platform.WINDOWS
 import java.nio.file.Path
 import kotlin.io.path.writeText
 
@@ -15,48 +16,44 @@ internal data class NodePathBundle(
 ) {
     companion object {
 
+        private const val NODE = "node"
+        private const val NPM = "npm"
+        private const val NPX = "npx"
+
         /**
          * Append the node, npm, and npx paths to the given path.
+         * @receiver The path should be the root of the node distribution.
          */
-        fun Path.toNodePathBundle(): NodePathBundle = System.getProperty("os.name").let {
-            when {
-                it.contains(WINDOWS) -> NodePathBundle(
-                    resolve("node.exe"),
-                    resolve("npm.cmd"),
-                    resolve("npx.cmd"),
-                )
-                it.contains(MAC) or it.contains(NodeDistribution.SupportedSystem.LINUX) -> NodePathBundle(
-                    resolve("bin/node"),
-                    resolve("bin/npm"),
-                    resolve("bin/npx"),
-                )
-                else -> throw PlatformError("Unsupported OS: $it")
-            }
+        fun Path.toNodePathBundle(): NodePathBundle = when (Platform.fromProperty()) {
+            WINDOWS -> append(executableBundle)
+            MAC, LINUX -> resolve("bin").append(executableBundle)
         }
 
         /**
-         * The default node, npm, and npx paths for platforms.
+         * The default node, npm, and npx executable for platforms.
          */
-        val defaultPathBundle: NodePathBundle = System.getProperty("os.name").let {
-            when {
-                it.contains(WINDOWS) -> NodePathBundle(
-                    Path.of("node.exe"),
-                    Path.of("npm.cmd"),
-                    Path.of("npx.cmd"),
-                )
-                it.contains(MAC) or it.contains(NodeDistribution.SupportedSystem.LINUX) -> NodePathBundle(
-                    Path.of("node"),
-                    Path.of("npm"),
-                    Path.of("npx"),
-                )
-                else -> throw PlatformError("Unsupported OS: $it")
-            }
+        val executableBundle: NodePathBundle = when (Platform.fromProperty()) {
+            WINDOWS -> NodePathBundle(
+                Path.of("$NODE.exe"),
+                Path.of("$NPM.cmd"),
+                Path.of("$NPX.cmd"),
+            )
+            MAC, LINUX -> NodePathBundle(
+                Path.of(NODE),
+                Path.of(NPM),
+                Path.of(NPX),
+            )
         }
 
-        private fun Path.adjustPathForWindows(): String = if (System.getProperty("os.name").contains(WINDOWS)) {
-            this.toString().replace("\\", "/")
-        } else {
-            this.toString()
+        private fun Path.append(bundle: NodePathBundle): NodePathBundle = NodePathBundle(
+            resolve(bundle.node),
+            resolve(bundle.npm),
+            resolve(bundle.npx),
+        )
+
+        private fun Path.adjustPathForWindows(): String = when (Platform.fromProperty()) {
+            WINDOWS -> toString().replace("\\", "\\\\")
+            else -> toString()
         }
 
         /**
@@ -67,9 +64,9 @@ internal data class NodePathBundle(
                 java.util.Properties().apply { load(input) }
             }
             return NodePathBundle(
-                Path.of(properties.getProperty("node")),
-                Path.of(properties.getProperty("npm")),
-                Path.of(properties.getProperty("npx")),
+                Path.of(properties.getProperty(NODE)),
+                Path.of(properties.getProperty(NPM)),
+                Path.of(properties.getProperty(NPX)),
             )
         }
     }
@@ -79,9 +76,9 @@ internal data class NodePathBundle(
      */
     fun saveToPropertiesFile(propertiesFile: Path) {
         val nodePaths = mapOf(
-            "node" to node.adjustPathForWindows(),
-            "npm" to npm.adjustPathForWindows(),
-            "npx" to npx.adjustPathForWindows(),
+            NODE to node.adjustPathForWindows(),
+            NPM to npm.adjustPathForWindows(),
+            NPX to npx.adjustPathForWindows(),
         )
         propertiesFile.writeText(nodePaths.entries.joinToString("\n") { (k, v) -> "$k=$v" })
     }
@@ -91,5 +88,3 @@ internal data class NodePathBundle(
      */
     fun toSet() = setOf(node, npm, npx)
 }
-
-internal data class PlatformError(override val message: String) : Error(message)

@@ -1,10 +1,15 @@
 package io.github.zuccherosintattico.utils
 
+import io.github.zuccherosintattico.utils.Architecture.AARCH64
+import io.github.zuccherosintattico.utils.Architecture.AMD64
+import io.github.zuccherosintattico.utils.Architecture.X64
+import io.github.zuccherosintattico.utils.Architecture.X86
+import io.github.zuccherosintattico.utils.Architecture.X86_64
 import io.github.zuccherosintattico.utils.NodeDistribution.SupportedExtensions.TAR_GZ
 import io.github.zuccherosintattico.utils.NodeDistribution.SupportedExtensions.ZIP
-import io.github.zuccherosintattico.utils.NodeDistribution.SupportedSystem.LINUX
-import io.github.zuccherosintattico.utils.NodeDistribution.SupportedSystem.MAC
-import io.github.zuccherosintattico.utils.NodeDistribution.SupportedSystem.WINDOWS
+import io.github.zuccherosintattico.utils.Platform.LINUX
+import io.github.zuccherosintattico.utils.Platform.MAC
+import io.github.zuccherosintattico.utils.Platform.WINDOWS
 
 internal object NodeDistribution {
 
@@ -16,42 +21,21 @@ internal object NodeDistribution {
         const val ZIP = ".zip"
     }
 
-    /**
-     * The supported operating systems.
-     */
-    object SupportedSystem {
-        const val WINDOWS = "Windows"
-        const val MAC = "Mac"
-        const val LINUX = "Linux"
+    private val osName: String = when (Platform.fromProperty()) {
+        WINDOWS -> "win"
+        MAC -> "darwin"
+        LINUX -> "linux"
     }
 
-    private val osName: String = System.getProperty("os.name").let {
-        when {
-            it.contains("Windows") -> "win"
-            it.contains("Mac") -> "darwin"
-            it.contains("Linux") -> "linux"
-            else -> throw PlatformError("Unsupported OS: $it")
-        }
+    private val osArch: String = when (Architecture.fromProperty()) {
+        X64, AMD64, X86_64 -> "x64"
+        X86 -> "x86"
+        AARCH64 -> "arm64"
     }
 
-    private val osArch: String = System.getProperty("os.arch").let {
-        when {
-            it.equals("aarch64") -> "arm64"
-            it.contains("x64") ||
-                it.contains("amd64") ||
-                it.contains("x86_64") -> "x64"
-            it.contains("x32") -> "x86"
-            else -> throw PlatformError("Unsupported architecture: $it")
-        }
-    }
-
-    private val format: String = System.getProperty("os.name").let {
-        when {
-            it.contains(WINDOWS) -> ZIP
-            it.contains(MAC) -> TAR_GZ
-            it.contains(LINUX) -> TAR_GZ
-            else -> throw PlatformError("Unsupported OS: $it")
-        }
+    private val format: String = when (Platform.fromProperty()) {
+        WINDOWS -> ZIP
+        MAC, LINUX -> TAR_GZ
     }
 
     /**

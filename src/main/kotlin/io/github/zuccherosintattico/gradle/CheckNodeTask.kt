@@ -1,11 +1,16 @@
 package io.github.zuccherosintattico.gradle
 
 import com.lordcodes.turtle.shellRun
-import io.github.zuccherosintattico.utils.ArchiveExtractor
+import io.github.zuccherosintattico.utils.ArchiveExtractor.extractTarGz
+import io.github.zuccherosintattico.utils.ArchiveExtractor.extractZip
 import io.github.zuccherosintattico.utils.NodeCommandsExtension.nodeVersion
 import io.github.zuccherosintattico.utils.NodeDistribution
 import io.github.zuccherosintattico.utils.NodePathBundle
 import io.github.zuccherosintattico.utils.NodePathBundle.Companion.toNodePathBundle
+import io.github.zuccherosintattico.utils.Platform
+import io.github.zuccherosintattico.utils.Platform.LINUX
+import io.github.zuccherosintattico.utils.Platform.MAC
+import io.github.zuccherosintattico.utils.Platform.WINDOWS
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -20,8 +25,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.attribute.PosixFilePermission
 import kotlin.io.path.createTempDirectory
-import kotlin.io.path.extension
-import kotlin.io.path.name
 
 /**
  * A task to check if Node is installed.
@@ -83,7 +86,7 @@ abstract class CheckNodeTask : DefaultTask() {
                 addPermissionsToNode(it)
             }
         } else {
-            NodePathBundle.defaultPathBundle
+            NodePathBundle.executableBundle
         }
         installNodeByBundle(nodePathBundle)
         check()
@@ -96,24 +99,18 @@ abstract class CheckNodeTask : DefaultTask() {
         nodePathBundle.saveToPropertiesFile(project.nodeBundleFile())
     }
 
-    private fun addPermissionsToNode(nodePathBundle: NodePathBundle) {
-        System.getProperty("os.name").let {
-            if (it.contains(NodeDistribution.SupportedSystem.LINUX) ||
-                it.contains(NodeDistribution.SupportedSystem.MAC)
-            ) {
-                nodePathBundle.toSet().forEach { executable ->
-                    Files.setPosixFilePermissions(
-                        executable,
-                        setOf(
-                            PosixFilePermission.OWNER_EXECUTE,
-                            PosixFilePermission.OWNER_READ,
-                            PosixFilePermission.OWNER_WRITE,
-                        ),
-                    )
-                }
-            }
-        }
+    private fun addPermissionsToNode(nodePathBundle: NodePathBundle) = when (Platform.fromProperty()) {
+        MAC, LINUX -> addPermissionsToNodeForUnix(nodePathBundle)
+        WINDOWS -> {} // No need to add permissions on Windows
     }
+
+    private fun addPermissionsToNodeForUnix(nodePathBundle: NodePathBundle) =
+        nodePathBundle.toSet().forEach { executable ->
+            Files.setPosixFilePermissions(
+                executable,
+                setOf(PosixFilePermission.OWNER_EXECUTE),
+            )
+        }
 
     private fun check() {
         runCatching { shellRun(project.projectDir) { nodeVersion(project) } }
@@ -122,7 +119,7 @@ abstract class CheckNodeTask : DefaultTask() {
     }
 
     private fun downloadNode(): NodePathBundle {
-        val urlToDownload = zipUrl.orElse(NodeDistribution.endpointFromVersion(version.get())).get()
+        val urlToDownload = zipUrl.getOrElse(NodeDistribution.endpointFromVersion(version.get()))
             .also { logger.quiet("Download node from: $it") }
             .let { URL(it) }
         /*
@@ -136,13 +133,10 @@ abstract class CheckNodeTask : DefaultTask() {
     }
 
     private fun downloadFromUrlAndMoveToBuildDirectory(url: URL): Path {
-        return downloadFromUrl(url).let {
-            when {
-                it.name.endsWith(NodeDistribution.SupportedExtensions.TAR_GZ) ->
-                    ArchiveExtractor.extractTarGz(it.toFile(), nodeBuildDir.asFile)
-                it.name.endsWith(NodeDistribution.SupportedExtensions.ZIP) ->
-                    ArchiveExtractor.extractZip(it.toFile(), nodeBuildDir.asFile)
-                else -> throw GradleException("Unsupported archive format: ${it.extension}")
+        return downloadArchiveFrom(url).let {
+            when (Platform.fromProperty()) {
+                WINDOWS -> extractZip(it.toFile(), nodeBuildDir.asFile)
+                MAC, LINUX -> extractTarGz(it.toFile(), nodeBuildDir.asFile)
             }
         }
     }
@@ -152,7 +146,7 @@ abstract class CheckNodeTask : DefaultTask() {
      */
     private fun URL.name() = file.split("/").last()
 
-    private fun downloadFromUrl(url: URL): Path {
+    private fun downloadArchiveFrom(url: URL): Path {
         val tempDir = createTempDirectory(TEMP_DIR_PREFIX).also { logger.quiet("Node will be downloaded in $it") }
         val nodeArchive = tempDir.resolve(url.name())
         runCatching {

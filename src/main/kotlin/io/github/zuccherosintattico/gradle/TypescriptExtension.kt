@@ -6,10 +6,7 @@ import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.property
 import java.io.Serializable
 
-internal object Utils {
-    /**
-     * Create a property with a default value.
-     */
+private object Utils {
     inline fun <reified T> ObjectFactory.propertyWithDefault(value: T): Property<T> =
         property<T>().convention(value)
 }
