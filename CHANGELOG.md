@@ -1,3 +1,26 @@
+## [3.0.3](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.0.2...3.0.3) (2024-03-22)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency gradle to v8.7 ([84509ca](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/84509cae7c2b18483c7eda858effce320bfef869))
+
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.10 ([38e0fb8](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/38e0fb8bcc0c62f3fb481760f2305f539d070f51))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.9 ([c025869](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/c0258699b68a8179fcbf745d84c19d3635f7cf29))
+
+
+### General maintenance
+
+* remove redundant task ([5c03188](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/5c03188e787058e563c75b59a0f52c0aed63260a))
+
+
+### Refactoring
+
+* **platform:** extract platform as concept ([9daa90f](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/9daa90f20550ca032a340df38a5225489503b323))
+
 ## [3.0.2](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.0.1...3.0.2) (2024-03-18)
 
 
