@@ -1,3 +1,19 @@
+## [3.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.0.3...3.1.0) (2024-03-25)
+
+
+### Features
+
+* **node:** avoid multiple download if already installed ([7605251](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/7605251abcb25e246c47cb232ca3a67cc79f1166))
+
+
+### Dependency updates
+
+* **deps:** update plugin gitsemver to v3.1.4 ([3e6766c](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/3e6766c7ca8ef2c10694b7e14796547f29736c10))
+* **deps:** update plugin kotlin-qa to v0.60.4 ([5c4eb89](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/5c4eb89f8e4b4012e8252402344d02b6f398055a))
+* **deps:** update plugin kotlin-qa to v0.61.0 ([5821eb1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/5821eb1a3fc98404cb14b8d32525c888e36c6cad))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.4 ([4767b52](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/4767b5244a802b20c5fba882eccc64ae16626cb5))
+* **deps:** update plugin publishoncentral to v5.0.26 ([992fb1a](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/992fb1a528bcce81b595b3b8266ecc92de94ab50))
+
 ## [3.0.3](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.0.2...3.0.3) (2024-03-22)
 
 
