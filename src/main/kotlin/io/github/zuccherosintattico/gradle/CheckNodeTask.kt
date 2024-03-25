@@ -18,6 +18,7 @@ import org.gradle.api.file.Directory
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.provideDelegate
 import java.net.URL
@@ -25,6 +26,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.attribute.PosixFilePermission
 import kotlin.io.path.createTempDirectory
+import kotlin.io.path.exists
 
 /**
  * A task to check if Node is installed.
@@ -40,6 +42,11 @@ abstract class CheckNodeTask : DefaultTask() {
          * The file containing the paths to the node, npm, and npx executables.
          */
         const val NODE_BUNDLE_PATHS_FILE = "nodePaths.properties"
+
+        /**
+         * The message when Node is already installed.
+         */
+        const val NODE_ALREADY_INSTALLED = "Node is already installed"
 
         /**
          * The project's build directory.
@@ -81,6 +88,11 @@ abstract class CheckNodeTask : DefaultTask() {
      */
     @TaskAction
     fun installAndCheckNode() {
+        if (project.nodeBundleFile().exists()) {
+            check()
+            throw StopExecutionException(NODE_ALREADY_INSTALLED)
+        }
+
         val nodePathBundle = if (shouldInstall.get()) {
             downloadNode().also {
                 addPermissionsToNode(it)
