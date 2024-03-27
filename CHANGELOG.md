@@ -1,3 +1,10 @@
+## [4.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.0.0...4.1.0) (2024-03-27)
+
+
+### Features
+
+* **execution:** add task for executin the compiled javascript ([fe76af7](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/fe76af75570f959ad7bf635d6649250ad33f7aa7))
+
 ## [4.0.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.1.0...4.0.0) (2024-03-27)
 
 
