@@ -1,3 +1,20 @@
+## [4.0.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.1.0...4.0.0) (2024-03-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **typescript:** handle tsconfig for compiling projects
+
+### Features
+
+* **typescript:** handle tsconfig for compiling projects ([7d7e1e7](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/7d7e1e7af4f08fa374c1282d44de18f09803e2f4))
+
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.11 ([f227d81](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/f227d813ea8780c11414956b612a0d243417281a))
+* **deps:** update dependency macos github actions runner to v13 ([be03833](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/be038330ef1b21954a11a2d45dde33d1d463ee5c))
+
 ## [3.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/3.0.3...3.1.0) (2024-03-25)
 
 
