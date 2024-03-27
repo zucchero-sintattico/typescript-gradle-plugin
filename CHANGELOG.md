@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.1.0...4.1.1) (2024-03-27)
+
+
+### Bug Fixes
+
+* **node:** reading permission executable ([f160250](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/f160250c509ea77a1d010672feb7559d1f20c622))
+
 ## [4.1.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.0.0...4.1.0) (2024-03-27)
 
 
