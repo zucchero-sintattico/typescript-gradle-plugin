@@ -120,7 +120,7 @@ abstract class CheckNodeTask : DefaultTask() {
         nodePathBundle.toSet().forEach { executable ->
             Files.setPosixFilePermissions(
                 executable,
-                setOf(PosixFilePermission.OWNER_EXECUTE),
+                setOf(PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.OWNER_READ),
             )
         }
 
