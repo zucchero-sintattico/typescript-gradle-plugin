@@ -70,7 +70,16 @@ class TypescriptPluginTest : AnnotationSpec() {
 
         shouldThrow<UnexpectedBuildFailure> {
             testFolder.executeGradleTask("compileTypescript")
-        }.message shouldContain NpmDependenciesTask.PACKAGE_JSON_ERROR
+        }.message shouldContain Constants.MISSING_PACKAGE_JSON_ERROR
+    }
+
+    @Test
+    fun `test missing ts config file`() {
+        val testFolder = getTempDirectoryWithResources("src/test/resources/missing-ts-config-env")
+
+        shouldThrow<UnexpectedBuildFailure> {
+            testFolder.executeGradleTask("compileTypescript")
+        }.message shouldContain Constants.MISSING_TS_CONFIG_ERROR
     }
 
     @Test

@@ -5,7 +5,7 @@ import io.github.zuccherosintattico.utils.NodeCommandsExtension.npxCommand
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
@@ -14,11 +14,10 @@ import org.gradle.api.tasks.TaskAction
  */
 abstract class TypescriptTask : DefaultTask() {
 
-    /**
-     * The source set to compile.
-     */
-    @get:Input
-    abstract val entrypoint: Property<String>
+    init {
+        group = "Node"
+        description = "Compile TypeScript files"
+    }
 
     /**
      * The build directory.
@@ -27,14 +26,29 @@ abstract class TypescriptTask : DefaultTask() {
     abstract val buildDir: Property<String>
 
     /**
+     * The path to the TypeScript configuration file.
+     */
+    @get:InputFile
+    abstract val tsConfig: Property<String>
+
+    /**
      * The task action.
      */
     @TaskAction
     fun compileTypescript() {
         runCatching {
-            shellRun(project.projectDir) { npxCommand(project, "tsc", "--outDir", buildDir.get(), entrypoint.get()) }
+            shellRun(project.projectDir) {
+                npxCommand(
+                    project,
+                    "tsc",
+                    "--project",
+                    tsConfig.get(),
+                    "--outDir",
+                    buildDir.get(),
+                )
+            }
         }
-            .onSuccess { logger.quiet("Compiled: $it") }
+            .onSuccess { logger.quiet("Compilation successful") }
             .onFailure { throw GradleException("Failed to compile TypeScript files: $it") }
     }
 }

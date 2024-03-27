@@ -1,5 +1,9 @@
 package io.github.zuccherosintattico.gradle
 
+import io.github.zuccherosintattico.gradle.Constants.MISSING_PACKAGE_JSON_ERROR
+import io.github.zuccherosintattico.gradle.Constants.MISSING_TS_CONFIG_ERROR
+import io.github.zuccherosintattico.gradle.Constants.PACKAGE_JSON
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -18,12 +22,18 @@ open class Typescript : Plugin<Project> {
             zipUrl.set(nodeExtension.zipUrl)
             version.set(nodeExtension.version)
         }
+        if (!project.fileExist(PACKAGE_JSON)) {
+            throw GradleException(MISSING_PACKAGE_JSON_ERROR)
+        }
         val npmDependenciesTask = project.registerTask<NpmDependenciesTask>("npmDependencies") {
             dependsOn(checkNodeTask)
         }
+        if (!project.fileExist(typescriptExtension.tsConfig.get())) {
+            throw GradleException(MISSING_TS_CONFIG_ERROR)
+        }
         project.registerTask<TypescriptTask>("compileTypescript") {
             dependsOn(npmDependenciesTask)
-            entrypoint.set(typescriptExtension.entrypoint)
+            tsConfig.set(typescriptExtension.tsConfig)
             buildDir.set(typescriptExtension.outputDir)
         }
     }
@@ -31,5 +41,7 @@ open class Typescript : Plugin<Project> {
     companion object {
         private inline fun <reified T : Task> Project.registerTask(name: String, noinline action: T.() -> Unit = {}) =
             tasks.register<T>(name, action)
+
+        private fun Project.fileExist(file: String): Boolean = file(file).exists()
     }
 }

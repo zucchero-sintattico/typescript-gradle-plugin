@@ -17,14 +17,23 @@ private object Utils {
 open class TypescriptExtension(objects: ObjectFactory) : Serializable {
 
     /**
-     * The path to the TypeScript source set.
+     * The name (or path) of the entrypoint file to run within Node.
+     * This would be appended to [outputDir] to create the full path.
+     * Default is "app.js".
      */
-    val entrypoint: Property<String> = objects.propertyWithDefault("src/main/typescript/index.ts")
+    val entrypoint: Property<String> = objects.propertyWithDefault("app.js")
 
     /**
      * The path to the TypeScript output directory.
+     * Default is "build/dist".
      */
     val outputDir: Property<String> = objects.propertyWithDefault("build/dist")
+
+    /**
+     * The path to the TypeScript configuration file.
+     * Default is "tsconfig.json".
+     */
+    val tsConfig: Property<String> = objects.propertyWithDefault("tsconfig.json")
 
     companion object {
         private const val serialVersionUID = 1L
