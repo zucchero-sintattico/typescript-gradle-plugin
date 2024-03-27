@@ -31,9 +31,14 @@ open class Typescript : Plugin<Project> {
         if (!project.fileExist(typescriptExtension.tsConfig.get())) {
             throw GradleException(MISSING_TS_CONFIG_ERROR)
         }
-        project.registerTask<TypescriptTask>("compileTypescript") {
+        val compileTypescriptTask = project.registerTask<TypescriptTask>("compileTypescript") {
             dependsOn(npmDependenciesTask)
             tsConfig.set(typescriptExtension.tsConfig)
+            buildDir.set(typescriptExtension.outputDir)
+        }
+        project.registerTask<RunJSTask>("runJS") {
+            dependsOn(compileTypescriptTask)
+            entrypoint.set(typescriptExtension.entrypoint)
             buildDir.set(typescriptExtension.outputDir)
         }
     }

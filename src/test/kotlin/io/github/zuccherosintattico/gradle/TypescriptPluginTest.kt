@@ -65,6 +65,15 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
+    fun `test run JavaScript`() {
+        val testFolder = getTempDirectoryWithResources()
+
+        testFolder
+            .executeGradleTask("runJS")
+            .output shouldContain "John is 42 years old"
+    }
+
+    @Test
     fun `test missing package json`() {
         val testFolder = getTempDirectoryWithResources("src/test/resources/missing-package-json-env")
 

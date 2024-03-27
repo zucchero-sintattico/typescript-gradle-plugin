@@ -29,7 +29,10 @@ object NodeCommandsExtension {
     ): String =
         command(project.loadNodeBundlePaths().withPath().toString(), arguments.toList())
 
-    private fun ShellScript.nodeCommand(project: Project, vararg arguments: String): String =
+    /**
+     * Run the Node command.
+     */
+    fun ShellScript.nodeCommand(project: Project, vararg arguments: String): String =
         runCommand(project, NodePathBundle::node, *arguments)
 
     /**
