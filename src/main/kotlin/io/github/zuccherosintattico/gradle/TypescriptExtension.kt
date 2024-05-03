@@ -58,7 +58,7 @@ open class NodeExtension(objects: ObjectFactory) : Serializable {
     /**
      * The version of Node to install. Ignored if [zipUrl] is specified.
      */
-    val version: Property<String> = objects.propertyWithDefault("v21.7.1")
+    val version: Property<String> = objects.propertyWithDefault("21.7.1")
 
     companion object {
         private const val serialVersionUID = 1L
