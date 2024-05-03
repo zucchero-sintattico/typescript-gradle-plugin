@@ -41,6 +41,9 @@ open class Typescript : Plugin<Project> {
             entrypoint.set(typescriptExtension.entrypoint)
             buildDir.set(typescriptExtension.outputDir)
         }
+        project.registerTask<Task>("build") {
+            dependsOn(compileTypescriptTask)
+        }
     }
 
     companion object {
