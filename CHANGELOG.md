@@ -1,3 +1,11 @@
+## [4.2.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.2.0...4.2.1) (2024-05-07)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin.jvm to v1.9.24 ([0a21fc5](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/0a21fc5fa0f831dc61449a30c99bac7aa867d2df))
+* **deps:** update dependency com.lordcodes.turtle:turtle to v0.10.0 ([1811487](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/1811487496c73ee4e05dd2513a6df8471be02c61))
+
 ## [4.2.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.1.1...4.2.0) (2024-05-03)
 
 
