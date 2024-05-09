@@ -7,6 +7,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.register
 
@@ -41,8 +42,9 @@ open class Typescript : Plugin<Project> {
             entrypoint.set(typescriptExtension.entrypoint)
             buildDir.set(typescriptExtension.outputDir)
         }
-        project.registerTask<Task>("build") {
-            dependsOn(compileTypescriptTask)
+        project.apply<org.gradle.api.plugins.BasePlugin>()
+        project.tasks.named("build").configure {
+            it.dependsOn(compileTypescriptTask)
         }
     }
 
