@@ -65,6 +65,20 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
+    fun `test build is alias for compileTypescript`() {
+        val testFolder = getTempDirectoryWithResources()
+        testFolder.executeGradleTask("build")
+
+        testFolder.walkRelative() shouldContainAll listOf(
+            "build/dist",
+            "build/dist/index.js",
+            "build/dist/person.js",
+            "node_modules",
+            "package-lock.json",
+        ).map { File(it) }
+    }
+
+    @Test
     fun `test run JavaScript`() {
         val testFolder = getTempDirectoryWithResources()
 
