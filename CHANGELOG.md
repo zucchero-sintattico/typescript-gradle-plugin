@@ -1,3 +1,37 @@
+## [4.2.2](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.2.1...4.2.2) (2024-05-10)
+
+
+### Dependency updates
+
+* **deps:** update kotest to v5.9.0 ([8e7b034](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/8e7b03450a2fc26505a33ebc44cd4921adc0b258))
+* **deps:** update node.js to 20.13 ([07d8205](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/07d8205f8d24c0a42f0317ac3fb12cfa6a8f8201))
+* **deps:** update plugin gitsemver to v3.1.5 ([3c9be4e](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/3c9be4ed20fd8e6f13b08a35152a97662ef3fd07))
+* **deps:** update plugin kotlin-qa to v0.61.1 ([7c921cc](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/7c921cc4f3cffc444cb689ceed5aa3016aeb9e67))
+* **deps:** update plugin kotlin-qa to v0.62.0 ([b404757](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/b404757d1bea39fcb901f2018581927dcf5041cc))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.5 ([db2c478](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/db2c47890aeb46f75dae27a9288e273b48ccae6c))
+* **deps:** update plugin publishoncentral to v5.1.1 ([7999f4f](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/7999f4f3114afba507a4ac20eec2a447d62618a8))
+
+
+### Bug Fixes
+
+* apply base plugin instead of defining lifecycle task names ([51b65e6](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/51b65e6f21d60c96ffa7c966ce416c887c2d3605))
+
+
+### Tests
+
+* add test for build as alias of compileTypescript ([536606f](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/536606f25c28328702e76175db22a3c8db18749a))
+
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v4.1.5 ([b96a967](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/b96a967f9a55916fecde614c9dca54335c26556d))
+* **deps:** update danysk/action-checkout action to v0.2.17 ([d852c84](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/d852c840fb4122f601fff7099cff287630b9718f))
+
+
+### Refactoring
+
+* tests and test envs ([04e402f](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/04e402f4eead88349857b5dfa849016b9ba9e131))
+
 ## [4.2.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.2.0...4.2.1) (2024-05-07)
 
 
