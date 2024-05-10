@@ -26,7 +26,9 @@ class TypescriptPluginTest : AnnotationSpec() {
         }
     }
 
-    private fun getTempDirectoryWithResources(resourcesPath: String = "src/test/resources/plugin-base-env"): Path =
+    private fun toPluginEnv(env: String): String = "src/test/resources/plugin-env/$env"
+
+    private fun getTempDirectoryWithResources(resourcesPath: String = toPluginEnv("base")): Path =
         createTempDirectory(TEST_DIR_PREFIX)
             .also { folder ->
                 val testResources = File(resourcesPath).toPath()
@@ -51,7 +53,7 @@ class TypescriptPluginTest : AnnotationSpec() {
     private fun Path.walkRelative(): List<File> = toFile().walk().map { it.relativeTo(toFile()) }.toList()
 
     @Test
-    fun `test base configuration`() {
+    fun `compileTypescript should work in base env`() {
         val testFolder = getTempDirectoryWithResources()
         testFolder.executeGradleTask("compileTypescript")
 
@@ -65,7 +67,7 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test build is alias for compileTypescript`() {
+    fun `Build task should be an alias for compileTypescript`() {
         val testFolder = getTempDirectoryWithResources()
         testFolder.executeGradleTask("build")
 
@@ -79,8 +81,8 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test multiple plugin with no conflict`() {
-        val testFolder = getTempDirectoryWithResources("src/test/resources/multiple-plugins-env")
+    fun `Multiple plugin should not conflict`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("multiple-plugins"))
         testFolder.executeGradleTask("build")
 
         testFolder.walkRelative() shouldContainAll listOf(
@@ -93,7 +95,7 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test run JavaScript`() {
+    fun `runJS should run compiled Javascript`() {
         val testFolder = getTempDirectoryWithResources()
 
         testFolder
@@ -102,8 +104,8 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test missing package json`() {
-        val testFolder = getTempDirectoryWithResources("src/test/resources/missing-package-json-env")
+    fun `Project without package json should give error`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("missing-package-json"))
 
         shouldThrow<UnexpectedBuildFailure> {
             testFolder.executeGradleTask("compileTypescript")
@@ -111,8 +113,8 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test missing ts config file`() {
-        val testFolder = getTempDirectoryWithResources("src/test/resources/missing-ts-config-env")
+    fun `Project without ts config should give error`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("missing-ts-config"))
 
         shouldThrow<UnexpectedBuildFailure> {
             testFolder.executeGradleTask("compileTypescript")
@@ -120,8 +122,8 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test node download`() {
-        val testFolder = getTempDirectoryWithResources("src/test/resources/download-node-env")
+    fun `Node should be downloaded`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("download-node"))
 
         testFolder
             .executeGradleTask("checkNode")
@@ -129,8 +131,8 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
-    fun `test avoid multiple download`() {
-        val testFolder = getTempDirectoryWithResources("src/test/resources/download-node-env")
+    fun `Node should not be download if already here`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("download-node"))
 
         testFolder
             .executeGradleTask("checkNode")
