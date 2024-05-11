@@ -1,3 +1,20 @@
+## [4.3.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.2.2...4.3.0) (2024-05-11)
+
+
+### Features
+
+* **compilation:** add customizable compilation script ([13dd7a9](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/13dd7a9b0d330a536390eae30602c10ac1dde9a6))
+
+
+### Dependency updates
+
+* **deps:** update plugin com.gradle.enterprise to v3.17.3 ([d1c6f07](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/d1c6f078b6d6c148fccd00d6769b31eca7df1dd4))
+
+
+### Documentation
+
+* improve readme ([e43850d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/e43850d6ec59bc3c2f37d9dd5e6251afa6002489))
+
 ## [4.2.2](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.2.1...4.2.2) (2024-05-10)
 
 
