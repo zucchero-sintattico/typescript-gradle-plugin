@@ -37,15 +37,28 @@ plugins {
 
 > Note: you should create a `package.json` and `tsconfig.json` in the root of your project with your desired configuration.
 
+### Other examples
+
+During the compilation, will run the command `npm run build`:
+
+```kotlin
+typescript {
+    buildCommandExecutable = BuildCommandExecutable.NPM
+    buildCommand = "run build"
+}
+```
+
 ### Configuration
 
 The plugin could be configured as follows (default values are shown):
 
 ```kotlin
 typescript {
-    entrypoint = "app.js"       // the entrypoint for execution within the output directory
-    outputDir = "build/dist"    // the output directory
-    tsConfig = "tsconfig.json"  // the tsconfig file
+    entrypoint = "app.js"            // the entrypoint for execution within the output directory
+    outputDir = "build/dist"         // the output directory
+    tsConfig = "tsconfig.json"       // the tsconfig file
+    buildCommandExecutable = DEFAULT // (DEFAULT, NODE, NPM, NPX) the executable for custom build command
+    buildCommand = ""                // the custom command to run during the compilation
 }
 
 node {
@@ -61,7 +74,7 @@ node {
 
 - `CheckNode`: checks if node is installed. If specified, it will download it.
 - `npmDependencies`: installs the npm dependencies from the `package.json`.
-- `compileTypescript`: compiles the typescript file. Output is in the `outputDir`.
+- `compileTypescript`: compiles the typescript file. Output is in the `outputDir`. If `buildCommandExecutable` is not `DEFAULT`, it will run the specified command in `buildCommand` using the specified executable in `buildCommandExecutable`
 - `runJS`: runs the javascript file specified in the `entrypoint`.
 - `build`: alias for `compileTypescript`.
 
