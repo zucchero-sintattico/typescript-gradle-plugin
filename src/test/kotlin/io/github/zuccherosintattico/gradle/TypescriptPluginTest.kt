@@ -81,6 +81,19 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
+    fun `Build command should be customizable`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("custom-build-command"))
+        testFolder.executeGradleTask("build")
+
+        testFolder.walkRelative() shouldContainAll listOf(
+            "dist/index.html",
+            "dist/vite.svg",
+            "dist/assets/index-B87vROlf.css",
+            "dist/assets/index-CqfCy5sM.js",
+        ).map { File(it) }
+    }
+
+    @Test
     fun `Multiple plugin should not conflict`() {
         val testFolder = getTempDirectoryWithResources(toPluginEnv("multiple-plugins"))
         testFolder.executeGradleTask("build")

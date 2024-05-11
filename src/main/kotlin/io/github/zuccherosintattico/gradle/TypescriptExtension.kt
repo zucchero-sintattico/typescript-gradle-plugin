@@ -35,9 +35,37 @@ open class TypescriptExtension(objects: ObjectFactory) : Serializable {
      */
     val tsConfig: Property<String> = objects.propertyWithDefault("tsconfig.json")
 
+    /**
+     * Custom build command type.
+     * Default is [BuildCommandExecutable.DEFAULT]
+     * and the plugin will run the following command:
+     * ```
+     * npx tsc --project [tsConfig] --outDir [outputDir]
+     * ```
+     * If [buildCommandExecutable] is set to different value, the plugin will execute the [buildCommand] instead.
+     */
+    val buildCommandExecutable: Property<BuildCommandExecutable> =
+        objects.propertyWithDefault(BuildCommandExecutable.DEFAULT)
+
+    /**
+     * Custom build command.
+     * @see [buildCommandExecutable]
+     */
+    val buildCommand: Property<String> = objects.propertyWithDefault("")
+
     companion object {
         private const val serialVersionUID = 1L
     }
+}
+
+/**
+ * The build command executable.
+ */
+enum class BuildCommandExecutable {
+    DEFAULT,
+    NODE,
+    NPM,
+    NPX,
 }
 
 /**

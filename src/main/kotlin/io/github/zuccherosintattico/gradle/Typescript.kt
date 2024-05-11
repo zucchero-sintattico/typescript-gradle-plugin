@@ -36,6 +36,8 @@ open class Typescript : Plugin<Project> {
             dependsOn(npmDependenciesTask)
             tsConfig.set(typescriptExtension.tsConfig)
             buildDir.set(typescriptExtension.outputDir)
+            buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
+            buildCommand.set(typescriptExtension.buildCommand)
         }
         project.registerTask<RunJSTask>("runJS") {
             dependsOn(compileTypescriptTask)
