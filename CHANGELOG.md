@@ -1,3 +1,19 @@
+## [4.3.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.0...4.3.1) (2024-05-21)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin.jvm to v2 ([64f369a](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/64f369ae9d6800dad3ff3c5f462e56a8ed1d3d8a))
+* **deps:** update plugin com.gradle.enterprise to v3.17.4 ([19794fa](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/19794fafe61c335eb5dd19b296d52d71f2f11499))
+
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v4.1.6 ([13edf7d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/13edf7decc187aa2a7a9383ed8d4cf4573a7a119))
+* **deps:** update danysk/action-checkout action to v0.2.18 ([788abd7](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/788abd7a2ce63910614cc1facfc06aeab2a4da9e))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.19 ([e23866d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/e23866de36de82cc47ea7febced08f01e3e0ba27))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v2.4.20 ([71f71f3](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/71f71f3c46b8320667eef19ba8aa8cd52d6d584e))
+
 ## [4.3.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.2.2...4.3.0) (2024-05-11)
 
 
