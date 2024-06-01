@@ -1,3 +1,18 @@
+## [4.3.2](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.1...4.3.2) (2024-06-01)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency gradle to v8.8 ([c7cbe1d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/c7cbe1d4cf0968b55d6f0aa3d4a8d53ea92f13e2))
+* **deps:** update dependency org.apache.commons:commons-compress to v1.26.2 ([a282e62](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/a282e62dfecd1f6135417daae45e82c0d488e54a))
+* **deps:** update node.js to 20.14 ([dba46fe](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/dba46feba7e2c0d1179094d9288043a8b8b96a1a))
+* **deps:** update plugin gitsemver to v3.1.6 ([66c11ee](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/66c11ee5dd102d608936006dac739255afa026ef))
+* **deps:** update plugin gitsemver to v3.1.7 ([f154c63](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/f154c63806844c2767bca64ebb5ba2c2d607a609))
+* **deps:** update plugin kotlin-qa to v0.62.1 ([5402ad4](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/5402ad437094b0fc23685bbbe8af5c2ef472e2a1))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.6 ([16fda56](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/16fda56b3684eaf9acba4a035859ea4e8f24c7d1))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.7 ([e7158e1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/e7158e159d5caac2d92813ecefb56fb6f827eb5d))
+* **deps:** update plugin publishoncentral to v5.1.2 ([88dda0b](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/88dda0b88a8546a728d1c871db1b9b0e3ab79abe))
+
 ## [4.3.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.0...4.3.1) (2024-05-21)
 
 
