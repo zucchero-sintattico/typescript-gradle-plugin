@@ -1,3 +1,21 @@
+## [4.3.5](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.4...4.3.5) (2024-08-15)
+
+### Dependency updates
+
+* **core-deps:** update dependency gradle to v8.10 ([6792998](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/6792998196bf0a755dcea3774dd6301f96d20c4b))
+* **deps:** update dependency org.apache.commons:commons-compress to v1.27.0 ([1fc8102](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/1fc8102643f8d007e05fe2164d524200e88b82f4))
+* **deps:** update plugin kotlin-qa to v0.65.1 ([09e21db](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/09e21db0bfc1da4334f867c57dfa32a3e9015aa1))
+* **deps:** update plugin kotlin-qa to v0.65.2 ([f51a591](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/f51a5918f35e8dc13e817e3fcc74d9938725d86b))
+* **deps:** update plugin multijvmtesting to v1.2.3 ([505cdca](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/505cdcab9c63df6941b4d9acca20f02d3699c9b2))
+* **deps:** update plugin multijvmtesting to v1.2.4 ([60edc74](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/60edc743547042f025030d966c1e0cb7a3f76ebb))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.9 ([275058b](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/275058bd637f6859fd08fec1a6d6ebc67c867fee))
+* **deps:** update plugin publishoncentral to v5.1.5 ([3c0b357](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/3c0b357669771dde293e5f4089bb23d1754227fd))
+* **deps:** update plugin publishoncentral to v5.1.6 ([89927fd](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/89927fd6655ef0e1b5be8730bf17d47dc1291a19))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.3 ([0013943](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/0013943731db717b6fc9eab8a66905486086c535))
+
 ## [4.3.4](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.3...4.3.4) (2024-08-06)
 
 ### Dependency updates
