@@ -15,18 +15,21 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.provideDelegate
+import java.io.File
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.attribute.PosixFilePermission
 import kotlin.io.path.createTempDirectory
-import kotlin.io.path.exists
 
 /**
  * A task to check if Node is installed.
@@ -51,7 +54,7 @@ abstract class CheckNodeTask : DefaultTask() {
         /**
          * The project's build directory.
          */
-        fun Project.nodeBundleFile(): Path = nodeBuildDir().asFile.resolve(NODE_BUNDLE_PATHS_FILE).toPath()
+        fun Project.nodeBundleFile(): File = nodeBuildDir().asFile.resolve(NODE_BUNDLE_PATHS_FILE)
     }
 
     init {
@@ -78,6 +81,18 @@ abstract class CheckNodeTask : DefaultTask() {
     @get:Input
     abstract val version: Property<String>
 
+    /**
+     * Output location for the [NodePathBundle].
+     */
+    @get:OutputFile
+    abstract val nodeBundleFile: RegularFileProperty
+
+    /**
+     * Working directory for shell script invocations.
+     */
+    @get:Internal
+    abstract val projectDir: RegularFileProperty
+
     private val nodeBuildDir: Directory by lazy {
         project.nodeBuildDir()
             .also { logger.quiet("Node will be installed in $it") }
@@ -88,7 +103,7 @@ abstract class CheckNodeTask : DefaultTask() {
      */
     @TaskAction
     fun installAndCheckNode() {
-        if (project.nodeBundleFile().exists()) {
+        if (nodeBundleFile.asFile.get().exists()) {
             check()
             throw StopExecutionException(NODE_ALREADY_INSTALLED)
         }
@@ -108,7 +123,7 @@ abstract class CheckNodeTask : DefaultTask() {
         if (!Files.exists(nodeBuildDir.asFile.toPath())) {
             Files.createDirectories(nodeBuildDir.asFile.toPath())
         }
-        nodePathBundle.saveToPropertiesFile(project.nodeBundleFile())
+        nodePathBundle.saveToPropertiesFile(nodeBundleFile)
     }
 
     private fun addPermissionsToNode(nodePathBundle: NodePathBundle) = when (Platform.fromProperty()) {
@@ -125,7 +140,7 @@ abstract class CheckNodeTask : DefaultTask() {
         }
 
     private fun check() {
-        runCatching { shellRun(project.projectDir) { nodeVersion(project) } }
+        runCatching { shellRun(projectDir.asFile.get()) { nodeVersion(nodeBundleFile) } }
             .onSuccess { logger.quiet("Node is installed at version $it") }
             .onFailure { logger.error("Node not found: $it") }
     }
