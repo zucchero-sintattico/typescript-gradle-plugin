@@ -1,5 +1,6 @@
 package io.github.zuccherosintattico.gradle
 
+import io.github.zuccherosintattico.gradle.CheckNodeTask.Companion.nodeBundleFile
 import io.github.zuccherosintattico.gradle.Constants.MISSING_PACKAGE_JSON_ERROR
 import io.github.zuccherosintattico.gradle.Constants.MISSING_TS_CONFIG_ERROR
 import io.github.zuccherosintattico.gradle.Constants.PACKAGE_JSON
@@ -22,12 +23,16 @@ open class Typescript : Plugin<Project> {
             shouldInstall.set(nodeExtension.shouldInstall)
             zipUrl.set(nodeExtension.zipUrl)
             version.set(nodeExtension.version)
+            nodeBundleFile.set(project.nodeBundleFile())
+            projectDir.set(project.projectDir)
+            outputs.upToDateWhen { false } // Don't allow gradle to mark this task as UP-TO-DATE
         }
         if (!project.fileExist(PACKAGE_JSON)) {
             throw GradleException(MISSING_PACKAGE_JSON_ERROR)
         }
         val npmDependenciesTask = project.registerTask<NpmDependenciesTask>("npmDependencies") {
-            dependsOn(checkNodeTask)
+            nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
+            projectDir.set(project.projectDir)
         }
         if (!project.fileExist(typescriptExtension.tsConfig.get())) {
             throw GradleException(MISSING_TS_CONFIG_ERROR)
@@ -38,11 +43,15 @@ open class Typescript : Plugin<Project> {
             buildDir.set(typescriptExtension.outputDir)
             buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
             buildCommand.set(typescriptExtension.buildCommand)
+            nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
+            projectDir.set(project.projectDir)
         }
         project.registerTask<RunJSTask>("runJS") {
             dependsOn(compileTypescriptTask)
             entrypoint.set(typescriptExtension.entrypoint)
             buildDir.set(typescriptExtension.outputDir)
+            nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
+            projectDir.set(project.projectDir)
         }
         project.apply<org.gradle.api.plugins.BasePlugin>()
         project.tasks.named("build").configure {
