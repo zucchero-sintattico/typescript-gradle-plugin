@@ -19,4 +19,9 @@ object Constants {
      * The error message when tsconfig.json is not found.
      */
     const val MISSING_TS_CONFIG_ERROR = "tsconfig.json not found"
+
+    /**
+     * The error message when the node executable is not found.
+     */
+    fun missingProjectRoot(root: String) = "The specified project root is missing: $root"
 }

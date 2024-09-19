@@ -92,3 +92,18 @@ open class NodeExtension(objects: ObjectFactory) : Serializable {
         private const val serialVersionUID = 1L
     }
 }
+
+/**
+ * The extension for configuring the project.
+ */
+open class ProjectExtension(objects: ObjectFactory) : Serializable {
+
+    /**
+     * The prefix to add to the project directory.
+     */
+    val basePath: Property<String> = objects.propertyWithDefault("")
+
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}
