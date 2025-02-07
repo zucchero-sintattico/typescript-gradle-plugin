@@ -62,9 +62,24 @@ open class TypescriptExtension(objects: ObjectFactory) : Serializable {
  * The build command executable.
  */
 enum class BuildCommandExecutable {
+    /**
+     * Default build command.
+     */
     DEFAULT,
+
+    /**
+     * Node build command.
+     */
     NODE,
+
+    /**
+     * NPM build command.
+     */
     NPM,
+
+    /**
+     * NPX build command.
+     */
     NPX,
 }
 
