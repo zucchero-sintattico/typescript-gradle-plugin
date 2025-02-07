@@ -117,6 +117,15 @@ class TypescriptPluginTest : AnnotationSpec() {
     }
 
     @Test
+    fun `runJS should work also with sub projects`() {
+        val testFolder = getTempDirectoryWithResources(toPluginEnv("sub-project"))
+
+        testFolder
+            .executeGradleTask("runJS", "--stacktrace")
+            .output shouldContain "John is 42 years old"
+    }
+
+    @Test
     fun `Project without package json should give error`() {
         val testFolder = getTempDirectoryWithResources(toPluginEnv("missing-package-json"))
 

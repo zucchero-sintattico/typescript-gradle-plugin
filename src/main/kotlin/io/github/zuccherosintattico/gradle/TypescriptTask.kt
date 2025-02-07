@@ -12,9 +12,9 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
+import kotlin.io.path.div
 
 /**
  * Typescript task.
@@ -35,7 +35,7 @@ abstract class TypescriptTask : DefaultTask() {
     /**
      * The path to the TypeScript configuration file.
      */
-    @get:InputFile
+    @get:Input
     abstract val tsConfig: Property<String>
 
     /**
@@ -51,12 +51,18 @@ abstract class TypescriptTask : DefaultTask() {
     abstract val buildCommand: Property<String>
 
     /**
+     * The custom npm prefix path.
+     */
+    @get:Input
+    abstract val prefixPath: Property<String>
+
+    /**
      * The task action.
      */
     @TaskAction
     fun compileTypescript() {
         runCatching {
-            shellRun(project.projectDir) {
+            shellRun(projectDir) {
                 when (buildCommandExecutable.get()) {
                     DEFAULT -> npxCommand(
                         project,
@@ -76,4 +82,6 @@ abstract class TypescriptTask : DefaultTask() {
             .onSuccess { logger.quiet("Compilation successful") }
             .onFailure { throw GradleException("Failed to compile TypeScript files: $it") }
     }
+
+    private val projectDir get() = (project.projectDir.toPath() / prefixPath.get()).toFile()
 }

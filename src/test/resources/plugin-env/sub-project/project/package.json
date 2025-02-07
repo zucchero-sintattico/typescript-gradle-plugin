@@ -1,0 +1,9 @@
+{
+  "name": "plugin-base-env",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "typescript": "^5.4.2"
+  }
+}
