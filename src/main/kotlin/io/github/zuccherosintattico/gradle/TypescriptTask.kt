@@ -22,7 +22,6 @@ import org.gradle.api.tasks.TaskAction
  * Typescript task.
  */
 abstract class TypescriptTask : DefaultTask() {
-
     init {
         group = "Node"
         description = "Compile TypeScript files"
@@ -80,6 +79,7 @@ abstract class TypescriptTask : DefaultTask() {
                         "--outDir",
                         buildDir.get(),
                     )
+
                     NODE -> nodeCommand(nodeBundleFile, *buildCommand.get().split(" ").toTypedArray())
                     NPM -> npmCommand(nodeBundleFile, *buildCommand.get().split(" ").toTypedArray())
                     NPX -> npxCommand(nodeBundleFile, *buildCommand.get().split(" ").toTypedArray())

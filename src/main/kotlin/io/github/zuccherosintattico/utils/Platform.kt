@@ -42,5 +42,10 @@ internal enum class Architecture {
     }
 }
 
-internal data class PlatformError(override val message: String) : Error(message)
-internal data class ArchitectureError(override val message: String) : Error(message)
+internal data class PlatformError(
+    override val message: String,
+) : Error(message)
+
+internal data class ArchitectureError(
+    override val message: String,
+) : Error(message)

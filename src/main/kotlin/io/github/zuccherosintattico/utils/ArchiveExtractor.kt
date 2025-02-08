@@ -14,7 +14,6 @@ import java.nio.file.Paths
 import java.util.zip.GZIPInputStream
 
 internal object ArchiveExtractor {
-
     /**
      * Extracts a tar.gz archive to a destination directory.
      *
@@ -23,7 +22,10 @@ internal object ArchiveExtractor {
      * @return the path to the extracted directory
      */
     @Suppress("NestedBlockDepth")
-    fun extractTarGz(archiveFile: File, destinationDir: File): Path {
+    fun extractTarGz(
+        archiveFile: File,
+        destinationDir: File,
+    ): Path {
         FileInputStream(archiveFile).use { fileIn ->
             BufferedInputStream(fileIn).use { bufferedIn ->
                 GZIPInputStream(bufferedIn).use { gzipIn ->
@@ -60,7 +62,10 @@ internal object ArchiveExtractor {
      * @return the path to the extracted directory
      */
     @Suppress("NestedBlockDepth", "MagicNumber")
-    fun extractZip(zipFile: File, destinationDir: File): Path {
+    fun extractZip(
+        zipFile: File,
+        destinationDir: File,
+    ): Path {
         FileInputStream(zipFile).use { fileIn ->
             BufferedInputStream(fileIn).use { bufferedIn ->
                 ZipArchiveInputStream(bufferedIn).use { zipIn ->

@@ -13,7 +13,6 @@ import org.gradle.api.tasks.TaskAction
  * A task to install NPM dependencies.
  */
 abstract class NpmDependenciesTask : DefaultTask() {
-
     init {
         group = "Node"
         description = "Install NPM dependencies"

@@ -17,7 +17,6 @@ import java.nio.file.Paths
  * A task to install NPM dependencies.
  */
 abstract class RunJSTask : DefaultTask() {
-
     init {
         group = "Node"
         description = "Run compiled JavaScript files within node"
@@ -54,10 +53,10 @@ abstract class RunJSTask : DefaultTask() {
     fun run() {
         runCatching {
             shellRun(projectDir.asFile.get()) {
-                    nodeCommand(nodeBundleFile, Paths.get(buildDir.get(), entrypoint.get()).toString())
-                }
+                nodeCommand(nodeBundleFile, Paths.get(buildDir.get(), entrypoint.get()).toString())
             }
-                .onSuccess { logger.lifecycle(it) }
-                .onFailure { throw GradleException("Failed to run: $it") }
         }
-    }
+            .onSuccess { logger.lifecycle(it) }
+            .onFailure { throw GradleException("Failed to run: $it") }
+        }
+}

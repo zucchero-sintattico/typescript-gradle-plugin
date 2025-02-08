@@ -25,6 +25,7 @@ import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.provideDelegate
 import java.io.File
+import java.net.URI
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
@@ -35,10 +36,10 @@ import kotlin.io.path.createTempDirectory
  * A task to check if Node is installed.
  */
 abstract class CheckNodeTask : DefaultTask() {
-
-    companion object {
+    internal companion object {
         private const val TEMP_DIR_PREFIX = "temp"
         private const val NODE_DIR = "node"
+
         private fun Project.nodeBuildDir(): Directory = layout.buildDirectory.get().dir(NODE_DIR)
 
         /**
@@ -94,7 +95,8 @@ abstract class CheckNodeTask : DefaultTask() {
     abstract val projectDir: RegularFileProperty
 
     private val nodeBuildDir: Directory by lazy {
-        project.nodeBuildDir()
+        project
+            .nodeBuildDir()
             .also { logger.quiet("Node will be installed in $it") }
     }
 
@@ -108,13 +110,14 @@ abstract class CheckNodeTask : DefaultTask() {
             throw StopExecutionException(NODE_ALREADY_INSTALLED)
         }
 
-        val nodePathBundle = if (shouldInstall.get()) {
-            downloadNode().also {
-                addPermissionsToNode(it)
+        val nodePathBundle =
+            if (shouldInstall.get()) {
+                downloadNode().also {
+                    addPermissionsToNode(it)
+                }
+            } else {
+                NodePathBundle.executableBundle
             }
-        } else {
-            NodePathBundle.executableBundle
-        }
         installNodeByBundle(nodePathBundle)
         check()
     }
@@ -126,10 +129,11 @@ abstract class CheckNodeTask : DefaultTask() {
         nodePathBundle.saveToPropertiesFile(nodeBundleFile)
     }
 
-    private fun addPermissionsToNode(nodePathBundle: NodePathBundle) = when (Platform.fromProperty()) {
-        MAC, LINUX -> addPermissionsToNodeForUnix(nodePathBundle)
-        WINDOWS -> {} // No need to add permissions on Windows
-    }
+    private fun addPermissionsToNode(nodePathBundle: NodePathBundle) =
+        when (Platform.fromProperty()) {
+            MAC, LINUX -> addPermissionsToNodeForUnix(nodePathBundle)
+            WINDOWS -> {} // No need to add permissions on Windows
+        }
 
     private fun addPermissionsToNodeForUnix(nodePathBundle: NodePathBundle) =
         nodePathBundle.toSet().forEach { executable ->
@@ -146,9 +150,11 @@ abstract class CheckNodeTask : DefaultTask() {
     }
 
     private fun downloadNode(): NodePathBundle {
-        val urlToDownload = zipUrl.getOrElse(NodeDistribution.endpointFromVersion(version.get()))
-            .also { logger.quiet("Download node from: $it") }
-            .let { URL(it) }
+        val urlToDownload =
+            zipUrl
+                .getOrElse(NodeDistribution.endpointFromVersion(version.get()))
+                .also { logger.quiet("Download node from: $it") }
+                .let { URI(it).toURL() }
         /*
         This call has the side effect to
             -  download the Node distribution;
@@ -159,14 +165,13 @@ abstract class CheckNodeTask : DefaultTask() {
         return downloadFromUrlAndMoveToBuildDirectory(urlToDownload).toNodePathBundle()
     }
 
-    private fun downloadFromUrlAndMoveToBuildDirectory(url: URL): Path {
-        return downloadArchiveFrom(url).let {
+    private fun downloadFromUrlAndMoveToBuildDirectory(url: URL): Path =
+        downloadArchiveFrom(url).let {
             when (Platform.fromProperty()) {
                 WINDOWS -> extractZip(it.toFile(), nodeBuildDir.asFile)
                 MAC, LINUX -> extractTarGz(it.toFile(), nodeBuildDir.asFile)
             }
         }
-    }
 
     /**
      * Retrieve the name of the file, including the extension.

@@ -8,7 +8,6 @@ import java.nio.file.Path
  * The extension for Node commands for [ShellScript].
  */
 object NodeCommandsExtension {
-
     /**
      * Get the version of installed Node.
      */

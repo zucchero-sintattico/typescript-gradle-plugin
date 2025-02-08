@@ -70,9 +70,11 @@ open class Typescript : Plugin<Project> {
         }
     }
 
-    companion object {
-        private inline fun <reified T : Task> Project.registerTask(name: String, noinline action: T.() -> Unit = {}) =
-            tasks.register<T>(name, action)
+    private companion object {
+        private inline fun <reified T : Task> Project.registerTask(
+            name: String,
+            noinline action: T.() -> Unit = {},
+        ) = tasks.register<T>(name, action)
 
         private fun Project.fileExist(file: File): Boolean = file(file).exists()
 
