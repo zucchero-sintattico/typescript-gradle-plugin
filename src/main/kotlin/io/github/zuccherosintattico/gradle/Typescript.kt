@@ -24,17 +24,22 @@ open class Typescript : Plugin<Project> {
         val projectExtension = project.extensions.create<ProjectExtension>("project")
         val nodeExtension = project.extensions.create<NodeExtension>("node")
         val typescriptExtension = project.extensions.create<TypescriptExtension>("typescript")
-        val checkNodeTask = project.registerTask<CheckNodeTask>("checkNode") {
-            shouldInstall.set(nodeExtension.shouldInstall)
-            zipUrl.set(nodeExtension.zipUrl)
-            version.set(nodeExtension.version)
-            nodeBundleFile.set(project.nodeBundleFile())
-            projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
-            outputs.upToDateWhen { false } // Don't allow gradle to mark this task as UP-TO-DATE
-        }
+        val checkNodeTask =
+            project.registerTask<CheckNodeTask>("checkNode") {
+                shouldInstall.set(nodeExtension.shouldInstall)
+                zipUrl.set(nodeExtension.zipUrl)
+                version.set(nodeExtension.version)
+                nodeBundleFile.set(project.nodeBundleFile())
+                projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
+                outputs.upToDateWhen { false } // Don't allow gradle to mark this task as UP-TO-DATE
+            }
         project.afterEvaluate {
             if (!(project.projectDir.toPath() / projectExtension.basePath.get()).toFile().exists()) {
-                throw GradleException(missingProjectRoot((project.projectDir.toPath() / projectExtension.basePath.get()).toFile().absolutePath))
+                throw GradleException(
+                    missingProjectRoot(
+                        (project.projectDir.toPath() / projectExtension.basePath.get()).toFile().absolutePath,
+                    ),
+                )
             }
             if (!project.fileExist(projectExtension.fromProjectBase(PACKAGE_JSON))) {
                 throw GradleException(MISSING_PACKAGE_JSON_ERROR)
@@ -43,20 +48,22 @@ open class Typescript : Plugin<Project> {
                 throw GradleException(MISSING_TS_CONFIG_ERROR)
             }
         }
-        val npmDependenciesTask = project.registerTask<NpmDependenciesTask>("npmDependencies") {
-            nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
-            dependsOn(checkNodeTask)
-            projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
-        }
-        val compileTypescriptTask = project.registerTask<TypescriptTask>("compileTypescript") {
-            dependsOn(npmDependenciesTask)
-            tsConfig.set(typescriptExtension.tsConfig)
-            buildDir.set(typescriptExtension.outputDir)
-            buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
-            buildCommand.set(typescriptExtension.buildCommand)
-            projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
-            nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
-        }
+        val npmDependenciesTask =
+            project.registerTask<NpmDependenciesTask>("npmDependencies") {
+                nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
+                dependsOn(checkNodeTask)
+                projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
+            }
+        val compileTypescriptTask =
+            project.registerTask<TypescriptTask>("compileTypescript") {
+                dependsOn(npmDependenciesTask)
+                tsConfig.set(typescriptExtension.tsConfig)
+                buildDir.set(typescriptExtension.outputDir)
+                buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
+                buildCommand.set(typescriptExtension.buildCommand)
+                projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
+                nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
+            }
         project.registerTask<RunJSTask>("runJS") {
             dependsOn(compileTypescriptTask)
             entrypoint.set(typescriptExtension.entrypoint)

@@ -71,14 +71,15 @@ abstract class TypescriptTask : DefaultTask() {
         runCatching {
             shellRun(projectDir.asFile.get()) {
                 when (buildCommandExecutable.get()) {
-                    DEFAULT -> npxCommand(
-                        nodeBundleFile,
-                        "tsc",
-                        "--project",
-                        tsConfig.get(),
-                        "--outDir",
-                        buildDir.get(),
-                    )
+                    DEFAULT ->
+                        npxCommand(
+                            nodeBundleFile,
+                            "tsc",
+                            "--project",
+                            tsConfig.get(),
+                            "--outDir",
+                            buildDir.get(),
+                        )
 
                     NODE -> nodeCommand(nodeBundleFile, *buildCommand.get().split(" ").toTypedArray())
                     NPM -> npmCommand(nodeBundleFile, *buildCommand.get().split(" ").toTypedArray())
@@ -86,8 +87,7 @@ abstract class TypescriptTask : DefaultTask() {
                     else -> throw GradleException("Unknown build command executable: ${buildCommandExecutable.get()}")
                 }
             }
-        }
-            .onSuccess { logger.quiet("Compilation successful") }
+        }.onSuccess { logger.quiet("Compilation successful") }
             .onFailure { throw GradleException("Failed to compile TypeScript files: $it") }
     }
 }

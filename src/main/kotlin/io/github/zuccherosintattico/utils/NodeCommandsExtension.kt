@@ -24,24 +24,29 @@ object NodeCommandsExtension {
         nodeBundleFile: RegularFileProperty,
         withPath: NodePathBundle.() -> Path,
         vararg arguments: String,
-    ): String =
-        command(nodeBundleFile.loadNodeBundlePaths().withPath().toString(), arguments.toList())
+    ): String = command(nodeBundleFile.loadNodeBundlePaths().withPath().toString(), arguments.toList())
 
     /**
      * Run the Node command.
      */
-    fun ShellScript.nodeCommand(nodeBundleFile: RegularFileProperty, vararg arguments: String): String =
-        runCommand(nodeBundleFile, NodePathBundle::node, *arguments)
+    fun ShellScript.nodeCommand(
+        nodeBundleFile: RegularFileProperty,
+        vararg arguments: String,
+    ): String = runCommand(nodeBundleFile, NodePathBundle::node, *arguments)
 
     /**
      * Run the NPM command.
      */
-    fun ShellScript.npmCommand(nodeBundleFile: RegularFileProperty, vararg arguments: String): String =
-        runCommand(nodeBundleFile, NodePathBundle::npm, *arguments)
+    fun ShellScript.npmCommand(
+        nodeBundleFile: RegularFileProperty,
+        vararg arguments: String,
+    ): String = runCommand(nodeBundleFile, NodePathBundle::npm, *arguments)
 
     /**
      * Run the NPX command.
      */
-    fun ShellScript.npxCommand(nodeBundleFile: RegularFileProperty, vararg arguments: String): String =
-        runCommand(nodeBundleFile, NodePathBundle::npx, *arguments)
+    fun ShellScript.npxCommand(
+        nodeBundleFile: RegularFileProperty,
+        vararg arguments: String,
+    ): String = runCommand(nodeBundleFile, NodePathBundle::npx, *arguments)
 }

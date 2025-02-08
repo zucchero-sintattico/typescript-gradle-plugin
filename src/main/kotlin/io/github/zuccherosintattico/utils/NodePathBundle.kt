@@ -66,9 +66,10 @@ internal data class NodePathBundle(
          * Load the node, npm, and npx paths from the given properties file.
          */
         fun loadFromPropertiesFile(propertiesFile: RegularFileProperty): NodePathBundle {
-            val properties = propertiesFile.asFile.get().inputStream().use { input ->
-                java.util.Properties().apply { load(input) }
-            }
+            val properties =
+                propertiesFile.asFile.get().inputStream().use { input ->
+                    java.util.Properties().apply { load(input) }
+                }
             return NodePathBundle(
                 Path.of(properties.getProperty(NODE)),
                 Path.of(properties.getProperty(NPM)),
@@ -81,12 +82,14 @@ internal data class NodePathBundle(
      * Save the [NodePathBundle] paths to the given properties file.
      */
     fun saveToPropertiesFile(propertiesFile: RegularFileProperty) {
-        val nodePaths = mapOf(
-            NODE to node.adjustPathForWindows(),
-            NPM to npm.adjustPathForWindows(),
-            NPX to npx.adjustPathForWindows(),
-        )
-        propertiesFile.asFile.get()
+        val nodePaths =
+            mapOf(
+                NODE to node.adjustPathForWindows(),
+                NPM to npm.adjustPathForWindows(),
+                NPX to npx.adjustPathForWindows(),
+            )
+        propertiesFile.asFile
+            .get()
             .writeText(nodePaths.entries.joinToString("\n") { (k, v) -> "$k=$v" })
     }
 

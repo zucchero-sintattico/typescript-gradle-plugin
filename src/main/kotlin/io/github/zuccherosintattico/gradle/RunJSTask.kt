@@ -55,8 +55,7 @@ abstract class RunJSTask : DefaultTask() {
             shellRun(projectDir.asFile.get()) {
                 nodeCommand(nodeBundleFile, Paths.get(buildDir.get(), entrypoint.get()).toString())
             }
-        }
-            .onSuccess { logger.lifecycle(it) }
+        }.onSuccess { logger.lifecycle(it) }
             .onFailure { throw GradleException("Failed to run: $it") }
-        }
+    }
 }
