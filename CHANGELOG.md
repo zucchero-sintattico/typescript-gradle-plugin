@@ -1,3 +1,13 @@
+## [4.4.1](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.4.0...4.4.1) (2025-02-08)
+
+### Dependency updates
+
+* **deps:** update dependency org.apache.commons:commons-compress to v1.27.1 ([e323c02](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/e323c029efae70e9f1d6df9af31627c370b59504))
+
+### Documentation
+
+* configuration for base project path ([cc148e6](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/cc148e6fbfb8bfe4099a1537500c85088e62ceed))
+
 ## [4.4.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.5...4.4.0) (2025-02-08)
 
 ### Features
