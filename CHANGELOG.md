@@ -1,3 +1,18 @@
+## [4.4.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.5...4.4.0) (2025-02-08)
+
+### Features
+
+* make possible different base folder for node project [#92](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/92) ([ae6590c](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/ae6590c52c6cc17fdab5458e43ac1da91b030b50))
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.96 ([066c111](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/066c111c08e5fb8662b014acd44be5abefd7c563))
+* **deps:** update plugin com.gradle.enterprise to v3.18 ([aa41feb](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/aa41feb11fde864a8a453b71386e63c4435dcdd8))
+
+### Documentation
+
+* add public member documentation ([ce2195b](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/ce2195b1b8d56125d42ab38bf5f5ceb0312b64e8))
+
 ## [4.3.5](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.4...4.3.5) (2024-08-15)
 
 ### Dependency updates
