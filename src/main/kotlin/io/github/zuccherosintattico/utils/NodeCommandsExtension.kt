@@ -9,7 +9,6 @@ import java.nio.file.Path
  * The extension for Node commands for [ShellScript].
  */
 object NodeCommandsExtension {
-
     /**
      * Get the version of installed Node.
      */
@@ -26,24 +25,29 @@ object NodeCommandsExtension {
         project: Project,
         withPath: NodePathBundle.() -> Path,
         vararg arguments: String,
-    ): String =
-        command(project.loadNodeBundlePaths().withPath().toString(), arguments.toList())
+    ): String = command(project.loadNodeBundlePaths().withPath().toString(), arguments.toList())
 
     /**
      * Run the Node command.
      */
-    fun ShellScript.nodeCommand(project: Project, vararg arguments: String): String =
-        runCommand(project, NodePathBundle::node, *arguments)
+    fun ShellScript.nodeCommand(
+        project: Project,
+        vararg arguments: String,
+    ): String = runCommand(project, NodePathBundle::node, *arguments)
 
     /**
      * Run the NPM command.
      */
-    fun ShellScript.npmCommand(project: Project, vararg arguments: String): String =
-        runCommand(project, NodePathBundle::npm, *arguments)
+    fun ShellScript.npmCommand(
+        project: Project,
+        vararg arguments: String,
+    ): String = runCommand(project, NodePathBundle::npm, *arguments)
 
     /**
      * Run the NPX command.
      */
-    fun ShellScript.npxCommand(project: Project, vararg arguments: String): String =
-        runCommand(project, NodePathBundle::npx, *arguments)
+    fun ShellScript.npxCommand(
+        project: Project,
+        vararg arguments: String,
+    ): String = runCommand(project, NodePathBundle::npx, *arguments)
 }

@@ -1,20 +1,20 @@
 plugins {
-    id("com.gradle.enterprise") version "3.18"
-    id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.9"
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+    id("com.gradle.develocity") version "3.19.1"
+    id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.20"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishOnFailure()
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
+        uploadInBackground = !System.getenv("CI").toBoolean()
     }
 }
 
 gitHooks {
     preCommit {
-        tasks("ktlintCheck", "detekt", "--parallel")
+        tasks("ktlintCheck")
     }
     commitMsg { conventionalCommits() }
     createHooks(true)

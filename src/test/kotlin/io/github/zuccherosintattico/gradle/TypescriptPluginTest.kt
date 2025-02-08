@@ -13,7 +13,6 @@ import java.nio.file.Path
 import kotlin.io.path.createTempDirectory
 
 class TypescriptPluginTest : AnnotationSpec() {
-
     companion object {
         private const val TEST_DIR_PREFIX = "test"
     }
@@ -32,7 +31,8 @@ class TypescriptPluginTest : AnnotationSpec() {
         createTempDirectory(TEST_DIR_PREFIX)
             .also { folder ->
                 val testResources = File(resourcesPath).toPath()
-                Files.walk(testResources)
+                Files
+                    .walk(testResources)
                     .filter { it != testResources }
                     .map { testResources.relativize(it) }
                     .map { testResources.resolve(it) to folder.resolve(it) }
@@ -57,13 +57,14 @@ class TypescriptPluginTest : AnnotationSpec() {
         val testFolder = getTempDirectoryWithResources()
         testFolder.executeGradleTask("compileTypescript")
 
-        testFolder.walkRelative() shouldContainAll listOf(
-            "build/dist",
-            "build/dist/index.js",
-            "build/dist/person.js",
-            "node_modules",
-            "package-lock.json",
-        ).map { File(it) }
+        testFolder.walkRelative() shouldContainAll
+            listOf(
+                "build/dist",
+                "build/dist/index.js",
+                "build/dist/person.js",
+                "node_modules",
+                "package-lock.json",
+            ).map { File(it) }
     }
 
     @Test
@@ -71,13 +72,14 @@ class TypescriptPluginTest : AnnotationSpec() {
         val testFolder = getTempDirectoryWithResources()
         testFolder.executeGradleTask("build")
 
-        testFolder.walkRelative() shouldContainAll listOf(
-            "build/dist",
-            "build/dist/index.js",
-            "build/dist/person.js",
-            "node_modules",
-            "package-lock.json",
-        ).map { File(it) }
+        testFolder.walkRelative() shouldContainAll
+            listOf(
+                "build/dist",
+                "build/dist/index.js",
+                "build/dist/person.js",
+                "node_modules",
+                "package-lock.json",
+            ).map { File(it) }
     }
 
     @Test
@@ -85,12 +87,13 @@ class TypescriptPluginTest : AnnotationSpec() {
         val testFolder = getTempDirectoryWithResources(toPluginEnv("custom-build-command"))
         testFolder.executeGradleTask("build")
 
-        testFolder.walkRelative() shouldContainAll listOf(
-            "dist/index.html",
-            "dist/vite.svg",
-            "dist/assets/index-B87vROlf.css",
-            "dist/assets/index-CqfCy5sM.js",
-        ).map { File(it) }
+        testFolder.walkRelative() shouldContainAll
+            listOf(
+                "dist/index.html",
+                "dist/vite.svg",
+                "dist/assets/index-B87vROlf.css",
+                "dist/assets/index-CqfCy5sM.js",
+            ).map { File(it) }
     }
 
     @Test
@@ -98,13 +101,14 @@ class TypescriptPluginTest : AnnotationSpec() {
         val testFolder = getTempDirectoryWithResources(toPluginEnv("multiple-plugins"))
         testFolder.executeGradleTask("build")
 
-        testFolder.walkRelative() shouldContainAll listOf(
-            "build/dist",
-            "build/dist/index.js",
-            "build/dist/person.js",
-            "node_modules",
-            "package-lock.json",
-        ).map { File(it) }
+        testFolder.walkRelative() shouldContainAll
+            listOf(
+                "build/dist",
+                "build/dist/index.js",
+                "build/dist/person.js",
+                "node_modules",
+                "package-lock.json",
+            ).map { File(it) }
     }
 
     @Test

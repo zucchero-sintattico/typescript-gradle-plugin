@@ -22,11 +22,12 @@ open class Typescript : Plugin<Project> {
         val projectExtension = project.extensions.create<ProjectExtension>("project")
         val nodeExtension = project.extensions.create<NodeExtension>("node")
         val typescriptExtension = project.extensions.create<TypescriptExtension>("typescript")
-        val checkNodeTask = project.registerTask<CheckNodeTask>("checkNode") {
-            shouldInstall.set(nodeExtension.shouldInstall)
-            zipUrl.set(nodeExtension.zipUrl)
-            version.set(nodeExtension.version)
-        }
+        val checkNodeTask =
+            project.registerTask<CheckNodeTask>("checkNode") {
+                shouldInstall.set(nodeExtension.shouldInstall)
+                zipUrl.set(nodeExtension.zipUrl)
+                version.set(nodeExtension.version)
+            }
         project.afterEvaluate {
             if (!project.fileExist(projectExtension.fromProjectBase(PACKAGE_JSON))) {
                 throw GradleException(MISSING_PACKAGE_JSON_ERROR)
@@ -35,18 +36,20 @@ open class Typescript : Plugin<Project> {
                 throw GradleException(MISSING_TS_CONFIG_ERROR)
             }
         }
-        val npmDependenciesTask = project.registerTask<NpmDependenciesTask>("npmDependencies") {
-            dependsOn(checkNodeTask)
-            prefixPath.set(projectExtension.basePath)
-        }
-        val compileTypescriptTask = project.registerTask<TypescriptTask>("compileTypescript") {
-            dependsOn(npmDependenciesTask)
-            tsConfig.set(typescriptExtension.tsConfig)
-            buildDir.set(typescriptExtension.outputDir)
-            buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
-            buildCommand.set(typescriptExtension.buildCommand)
-            prefixPath.set(projectExtension.basePath)
-        }
+        val npmDependenciesTask =
+            project.registerTask<NpmDependenciesTask>("npmDependencies") {
+                dependsOn(checkNodeTask)
+                prefixPath.set(projectExtension.basePath)
+            }
+        val compileTypescriptTask =
+            project.registerTask<TypescriptTask>("compileTypescript") {
+                dependsOn(npmDependenciesTask)
+                tsConfig.set(typescriptExtension.tsConfig)
+                buildDir.set(typescriptExtension.outputDir)
+                buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
+                buildCommand.set(typescriptExtension.buildCommand)
+                prefixPath.set(projectExtension.basePath)
+            }
         project.registerTask<RunJSTask>("runJS") {
             dependsOn(compileTypescriptTask)
             entrypoint.set(typescriptExtension.entrypoint)
@@ -59,9 +62,11 @@ open class Typescript : Plugin<Project> {
         }
     }
 
-    companion object {
-        private inline fun <reified T : Task> Project.registerTask(name: String, noinline action: T.() -> Unit = {}) =
-            tasks.register<T>(name, action)
+    private companion object {
+        private inline fun <reified T : Task> Project.registerTask(
+            name: String,
+            noinline action: T.() -> Unit = {},
+        ) = tasks.register<T>(name, action)
 
         private fun Project.fileExist(file: File): Boolean = file(file).exists()
 

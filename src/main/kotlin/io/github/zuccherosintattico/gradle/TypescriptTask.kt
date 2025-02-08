@@ -20,7 +20,6 @@ import kotlin.io.path.div
  * Typescript task.
  */
 abstract class TypescriptTask : DefaultTask() {
-
     init {
         group = "Node"
         description = "Compile TypeScript files"
@@ -64,22 +63,22 @@ abstract class TypescriptTask : DefaultTask() {
         runCatching {
             shellRun(projectDir) {
                 when (buildCommandExecutable.get()) {
-                    DEFAULT -> npxCommand(
-                        project,
-                        "tsc",
-                        "--project",
-                        tsConfig.get(),
-                        "--outDir",
-                        buildDir.get(),
-                    )
+                    DEFAULT ->
+                        npxCommand(
+                            project,
+                            "tsc",
+                            "--project",
+                            tsConfig.get(),
+                            "--outDir",
+                            buildDir.get(),
+                        )
                     NODE -> nodeCommand(project, *buildCommand.get().split(" ").toTypedArray())
                     NPM -> npmCommand(project, *buildCommand.get().split(" ").toTypedArray())
                     NPX -> npxCommand(project, *buildCommand.get().split(" ").toTypedArray())
                     else -> throw GradleException("Unknown build command executable: ${buildCommandExecutable.get()}")
                 }
             }
-        }
-            .onSuccess { logger.quiet("Compilation successful") }
+        }.onSuccess { logger.quiet("Compilation successful") }
             .onFailure { throw GradleException("Failed to compile TypeScript files: $it") }
     }
 

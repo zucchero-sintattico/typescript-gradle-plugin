@@ -4,7 +4,6 @@ package io.github.zuccherosintattico.gradle
  * Some constants used in the plugin.
  */
 object Constants {
-
     /**
      * The name of the package JSON file.
      */

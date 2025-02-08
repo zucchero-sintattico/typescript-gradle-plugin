@@ -15,7 +15,6 @@ import kotlin.io.path.div
  * A task to install NPM dependencies.
  */
 abstract class RunJSTask : DefaultTask() {
-
     init {
         group = "Node"
         description = "Run compiled JavaScript files within node"
@@ -48,8 +47,7 @@ abstract class RunJSTask : DefaultTask() {
             shellRun(projectDir) {
                 nodeCommand(project, Paths.get(buildDir.get(), entrypoint.get()).toString())
             }
-        }
-            .onSuccess { logger.lifecycle(it) }
+        }.onSuccess { logger.lifecycle(it) }
             .onFailure { throw GradleException("Failed to run: $it") }
     }
 

@@ -1,6 +1,7 @@
-@file:Suppress("OPT_IN_USAGE")
+@file:Suppress("UnstableApiUsage")
 
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION as KOTLIN_VERSION
 
 @Suppress("DSL_SCOPE_VIOLATION")
@@ -22,6 +23,7 @@ plugins {
  */
 group = "io.github.zuccherosintattico"
 description = "Simple Gradle plugin for automatic typescript build"
+
 inner class ProjectInfo {
     val longName = "Gradle plugin for typescript"
     val website = "https://github.com/zucchero-sintattico/$name"
@@ -41,8 +43,8 @@ repositories {
 }
 
 multiJvm {
-    jvmVersionForCompilation.set(17)
     maximumSupportedJvmVersion.set(latestJavaSupportedByGradle)
+    jvmVersionForCompilation.set(latestJavaSupportedByGradle)
 }
 
 dependencies {
@@ -67,14 +69,10 @@ configurations.matching { it.name != "detekt" }.all {
     }
 }
 
-kotlin {
-    target {
-        compilations.all {
-            kotlinOptions {
-                allWarningsAsErrors = true
-                freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
-            }
-        }
+tasks.withType<KotlinCompilationTask<*>>().configureEach {
+    compilerOptions {
+        allWarningsAsErrors = true
+        freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
 }
 
@@ -96,7 +94,10 @@ tasks.withType<Test>().configureEach {
         showStandardStreams = true
         showCauses = true
         showStackTraces = true
-        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        events(
+            *org.gradle.api.tasks.testing.logging.TestLogEvent
+                .values(),
+        )
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }

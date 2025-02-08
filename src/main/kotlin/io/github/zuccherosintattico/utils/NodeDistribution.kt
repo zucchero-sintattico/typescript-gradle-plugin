@@ -12,7 +12,6 @@ import io.github.zuccherosintattico.utils.Platform.MAC
 import io.github.zuccherosintattico.utils.Platform.WINDOWS
 
 internal object NodeDistribution {
-
     /**
      * The supported file extensions.
      */
@@ -21,22 +20,25 @@ internal object NodeDistribution {
         const val ZIP = ".zip"
     }
 
-    private val osName: String = when (Platform.fromProperty()) {
-        WINDOWS -> "win"
-        MAC -> "darwin"
-        LINUX -> "linux"
-    }
+    private val osName: String =
+        when (Platform.fromProperty()) {
+            WINDOWS -> "win"
+            MAC -> "darwin"
+            LINUX -> "linux"
+        }
 
-    private val osArch: String = when (Architecture.fromProperty()) {
-        X64, AMD64, X86_64 -> "x64"
-        X86 -> "x86"
-        AARCH64 -> "arm64"
-    }
+    private val osArch: String =
+        when (Architecture.fromProperty()) {
+            X64, AMD64, X86_64 -> "x64"
+            X86 -> "x86"
+            AARCH64 -> "arm64"
+        }
 
-    private val format: String = when (Platform.fromProperty()) {
-        WINDOWS -> ZIP
-        MAC, LINUX -> TAR_GZ
-    }
+    private val format: String =
+        when (Platform.fromProperty()) {
+            WINDOWS -> ZIP
+            MAC, LINUX -> TAR_GZ
+        }
 
     /**
      * Returns the node download endpoint for the given version and platform.

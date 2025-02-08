@@ -7,15 +7,15 @@ import org.gradle.kotlin.dsl.property
 import java.io.Serializable
 
 private object Utils {
-    inline fun <reified T> ObjectFactory.propertyWithDefault(value: T): Property<T> =
-        property<T>().convention(value)
+    inline fun <reified T> ObjectFactory.propertyWithDefault(value: T): Property<T> = property<T>().convention(value)
 }
 
 /**
  * The extension for configuring TypeScript plugin.
  */
-open class TypescriptExtension(objects: ObjectFactory) : Serializable {
-
+open class TypescriptExtension(
+    objects: ObjectFactory,
+) : Serializable {
     /**
      * The name (or path) of the entrypoint file to run within Node.
      * This would be appended to [outputDir] to create the full path.
@@ -53,7 +53,7 @@ open class TypescriptExtension(objects: ObjectFactory) : Serializable {
      */
     val buildCommand: Property<String> = objects.propertyWithDefault("")
 
-    companion object {
+    private companion object {
         private const val serialVersionUID = 1L
     }
 }
@@ -86,8 +86,9 @@ enum class BuildCommandExecutable {
 /**
  * The extension for configuring TypeScript plugin.
  */
-open class NodeExtension(objects: ObjectFactory) : Serializable {
-
+open class NodeExtension(
+    objects: ObjectFactory,
+) : Serializable {
     /**
      * The path to the TypeScript source set.
      */
@@ -103,7 +104,7 @@ open class NodeExtension(objects: ObjectFactory) : Serializable {
      */
     val version: Property<String> = objects.propertyWithDefault("21.7.1")
 
-    companion object {
+    private companion object {
         private const val serialVersionUID = 1L
     }
 }
@@ -111,14 +112,15 @@ open class NodeExtension(objects: ObjectFactory) : Serializable {
 /**
  * The extension for configuring the project.
  */
-open class ProjectExtension(objects: ObjectFactory) : Serializable {
-
+open class ProjectExtension(
+    objects: ObjectFactory,
+) : Serializable {
     /**
      * The prefix to add to the project directory.
      */
     val basePath: Property<String> = objects.propertyWithDefault("")
 
-    companion object {
+    private companion object {
         private const val serialVersionUID = 1L
     }
 }
