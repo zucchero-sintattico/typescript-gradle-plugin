@@ -1,8 +1,7 @@
 package io.github.zuccherosintattico.utils
 
 import com.lordcodes.turtle.ShellScript
-import io.github.zuccherosintattico.gradle.CheckNodeTask.Companion.nodeBundleFile
-import org.gradle.api.Project
+import org.gradle.api.file.RegularFileProperty
 import java.nio.file.Path
 
 /**
@@ -12,42 +11,42 @@ object NodeCommandsExtension {
     /**
      * Get the version of installed Node.
      */
-    fun ShellScript.nodeVersion(project: Project): String = nodeCommand(project, "--version")
+    fun ShellScript.nodeVersion(nodeBundleFile: RegularFileProperty): String = nodeCommand(nodeBundleFile, "--version")
 
     /**
      * Install the dependencies.
      */
-    fun ShellScript.npmInstall(project: Project): String = npmCommand(project, "install")
+    fun ShellScript.npmInstall(nodeBundleFile: RegularFileProperty): String = npmCommand(nodeBundleFile, "install")
 
-    private fun Project.loadNodeBundlePaths(): NodePathBundle = NodePathBundle.loadFromPropertiesFile(nodeBundleFile())
+    private fun RegularFileProperty.loadNodeBundlePaths(): NodePathBundle = NodePathBundle.loadFromPropertiesFile(this)
 
     private fun ShellScript.runCommand(
-        project: Project,
+        nodeBundleFile: RegularFileProperty,
         withPath: NodePathBundle.() -> Path,
         vararg arguments: String,
-    ): String = command(project.loadNodeBundlePaths().withPath().toString(), arguments.toList())
+    ): String = command(nodeBundleFile.loadNodeBundlePaths().withPath().toString(), arguments.toList())
 
     /**
      * Run the Node command.
      */
     fun ShellScript.nodeCommand(
-        project: Project,
+        nodeBundleFile: RegularFileProperty,
         vararg arguments: String,
-    ): String = runCommand(project, NodePathBundle::node, *arguments)
+    ): String = runCommand(nodeBundleFile, NodePathBundle::node, *arguments)
 
     /**
      * Run the NPM command.
      */
     fun ShellScript.npmCommand(
-        project: Project,
+        nodeBundleFile: RegularFileProperty,
         vararg arguments: String,
-    ): String = runCommand(project, NodePathBundle::npm, *arguments)
+    ): String = runCommand(nodeBundleFile, NodePathBundle::npm, *arguments)
 
     /**
      * Run the NPX command.
      */
     fun ShellScript.npxCommand(
-        project: Project,
+        nodeBundleFile: RegularFileProperty,
         vararg arguments: String,
-    ): String = runCommand(project, NodePathBundle::npx, *arguments)
+    ): String = runCommand(nodeBundleFile, NodePathBundle::npx, *arguments)
 }

@@ -3,8 +3,8 @@ package io.github.zuccherosintattico.utils
 import io.github.zuccherosintattico.utils.Platform.LINUX
 import io.github.zuccherosintattico.utils.Platform.MAC
 import io.github.zuccherosintattico.utils.Platform.WINDOWS
+import org.gradle.api.file.RegularFileProperty
 import java.nio.file.Path
-import kotlin.io.path.writeText
 
 /**
  * A bundle of paths to the node, npm, and npx executables.
@@ -64,9 +64,9 @@ internal data class NodePathBundle(
         /**
          * Load the node, npm, and npx paths from the given properties file.
          */
-        fun loadFromPropertiesFile(propertiesFile: Path): NodePathBundle {
+        fun loadFromPropertiesFile(propertiesFile: RegularFileProperty): NodePathBundle {
             val properties =
-                propertiesFile.toFile().inputStream().use { input ->
+                propertiesFile.asFile.get().inputStream().use { input ->
                     java.util.Properties().apply { load(input) }
                 }
             return NodePathBundle(
@@ -80,14 +80,16 @@ internal data class NodePathBundle(
     /**
      * Save the [NodePathBundle] paths to the given properties file.
      */
-    fun saveToPropertiesFile(propertiesFile: Path) {
+    fun saveToPropertiesFile(propertiesFile: RegularFileProperty) {
         val nodePaths =
             mapOf(
                 NODE to node.adjustPathForWindows(),
                 NPM to npm.adjustPathForWindows(),
                 NPX to npx.adjustPathForWindows(),
             )
-        propertiesFile.writeText(nodePaths.entries.joinToString("\n") { (k, v) -> "$k=$v" })
+        propertiesFile.asFile
+            .get()
+            .writeText(nodePaths.entries.joinToString("\n") { (k, v) -> "$k=$v" })
     }
 
     /**

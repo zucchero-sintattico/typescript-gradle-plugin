@@ -4,12 +4,14 @@ import com.lordcodes.turtle.shellRun
 import io.github.zuccherosintattico.utils.NodeCommandsExtension.nodeCommand
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import java.nio.file.Paths
-import kotlin.io.path.div
 
 /**
  * A task to install NPM dependencies.
@@ -33,10 +35,16 @@ abstract class RunJSTask : DefaultTask() {
     abstract val buildDir: Property<String>
 
     /**
-     * The custom npm prefix path.
+     * [io.github.zuccherosintattico.utils.NodePathBundle] file location from [CheckNodeTask].
      */
-    @get:Input
-    abstract val prefixPath: Property<String>
+    @get:InputFile
+    abstract val nodeBundleFile: RegularFileProperty
+
+    /**
+     * Working directory for shell script invocations.
+     */
+    @get:Internal
+    abstract val projectDir: RegularFileProperty
 
     /**
      * The action to run the compiled JavaScript files within node.
@@ -44,12 +52,10 @@ abstract class RunJSTask : DefaultTask() {
     @TaskAction
     fun run() {
         runCatching {
-            shellRun(projectDir) {
-                nodeCommand(project, Paths.get(buildDir.get(), entrypoint.get()).toString())
+            shellRun(projectDir.asFile.get()) {
+                nodeCommand(nodeBundleFile, Paths.get(buildDir.get(), entrypoint.get()).toString())
             }
         }.onSuccess { logger.lifecycle(it) }
             .onFailure { throw GradleException("Failed to run: $it") }
     }
-
-    private val projectDir get() = (project.projectDir.toPath() / prefixPath.get()).toFile()
 }

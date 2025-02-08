@@ -1,8 +1,10 @@
 package io.github.zuccherosintattico.gradle
 
+import io.github.zuccherosintattico.gradle.CheckNodeTask.Companion.nodeBundleFile
 import io.github.zuccherosintattico.gradle.Constants.MISSING_PACKAGE_JSON_ERROR
 import io.github.zuccherosintattico.gradle.Constants.MISSING_TS_CONFIG_ERROR
 import io.github.zuccherosintattico.gradle.Constants.PACKAGE_JSON
+import io.github.zuccherosintattico.gradle.Constants.missingProjectRoot
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -27,8 +29,18 @@ open class Typescript : Plugin<Project> {
                 shouldInstall.set(nodeExtension.shouldInstall)
                 zipUrl.set(nodeExtension.zipUrl)
                 version.set(nodeExtension.version)
+                nodeBundleFile.set(project.nodeBundleFile())
+                projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
+                outputs.upToDateWhen { false } // Don't allow gradle to mark this task as UP-TO-DATE
             }
         project.afterEvaluate {
+            if (!(project.projectDir.toPath() / projectExtension.basePath.get()).toFile().exists()) {
+                throw GradleException(
+                    missingProjectRoot(
+                        (project.projectDir.toPath() / projectExtension.basePath.get()).toFile().absolutePath,
+                    ),
+                )
+            }
             if (!project.fileExist(projectExtension.fromProjectBase(PACKAGE_JSON))) {
                 throw GradleException(MISSING_PACKAGE_JSON_ERROR)
             }
@@ -38,8 +50,9 @@ open class Typescript : Plugin<Project> {
         }
         val npmDependenciesTask =
             project.registerTask<NpmDependenciesTask>("npmDependencies") {
+                nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
                 dependsOn(checkNodeTask)
-                prefixPath.set(projectExtension.basePath)
+                projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
             }
         val compileTypescriptTask =
             project.registerTask<TypescriptTask>("compileTypescript") {
@@ -48,13 +61,15 @@ open class Typescript : Plugin<Project> {
                 buildDir.set(typescriptExtension.outputDir)
                 buildCommandExecutable.set(typescriptExtension.buildCommandExecutable)
                 buildCommand.set(typescriptExtension.buildCommand)
-                prefixPath.set(projectExtension.basePath)
+                projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
+                nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
             }
         project.registerTask<RunJSTask>("runJS") {
             dependsOn(compileTypescriptTask)
             entrypoint.set(typescriptExtension.entrypoint)
             buildDir.set(typescriptExtension.outputDir)
-            prefixPath.set(projectExtension.basePath)
+            nodeBundleFile.set(checkNodeTask.flatMap { it.nodeBundleFile })
+            projectDir.set((project.projectDir.toPath() / projectExtension.basePath.get()).toFile())
         }
         project.apply<org.gradle.api.plugins.BasePlugin>()
         project.tasks.named("build").configure {
