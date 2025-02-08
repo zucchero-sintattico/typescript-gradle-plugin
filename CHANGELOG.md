@@ -1,3 +1,21 @@
+## [4.5.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.4.0...4.5.0) (2025-02-08)
+
+### Features
+
+* improve gradle adoption [#146](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/146) ([1e09ea5](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/1e09ea5d2183e5daa9b0c56df895f77528dd2500))
+* **plugin:** add gradle configuration cache compatibility ([0c684d3](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/0c684d376d04e9977de615ebc83c2a9ecba14464))
+
+### Documentation
+
+* add public member documentation ([917c2e3](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/917c2e3aef6e2381086f5737cfdc981eb8346357))
+* configuration for base project path ([2c67f64](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/2c67f64d938bbdfbaebaf15bb42998c78c809cd6))
+* configuration for base project path ([cc148e6](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/cc148e6fbfb8bfe4099a1537500c85088e62ceed))
+
+### General maintenance
+
+* Merge branch 'trevjonez-tjones/configuration-cache' PR #[#146](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/146) ([64c3b52](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/64c3b5274e5d55c9446ba91f8a7b65986a8a600f))
+* **release:** 4.4.0 [skip ci] ([73a1a9d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/73a1a9d9f9b8b3ddc682255c651cac7943061028)), closes [#92](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/92)
+
 ## [4.4.0](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.3.5...4.4.0) (2025-02-08)
 
 ### Features
