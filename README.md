@@ -69,6 +69,10 @@ node {
     ---OR---
     version = "21.7.1"          // the version of node to download
 }
+
+project {
+    basePath = "path/to/project" // the base path of the project. Default is the project root
+}
 ```
 ### Available tasks
 
