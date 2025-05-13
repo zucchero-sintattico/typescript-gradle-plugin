@@ -1,3 +1,17 @@
+## [4.5.4](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.5.3...4.5.4) (2025-05-13)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-gradle-plugin to v2.1.21 ([#214](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/214)) ([4f2442e](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/4f2442e18af055767ec60ce586c85b14353620a9))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.126 ([#210](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/210)) ([204dab8](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/204dab8e2afcd981b3c8dab7aae4c86c04d7f4cc))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.127 ([#211](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/211)) ([86c1e80](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/86c1e80e5c672a1df1ba49a1d4905a932b9365e0))
+* **deps:** update plugin kotlin-qa to v0.86.1 ([#207](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/207)) ([dd950be](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/dd950beb5d64a577eafe35af407b2fcee5f102a9))
+* **deps:** update plugin publishoncentral to v8.0.7 ([#212](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/212)) ([65c6064](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/65c6064751276155b87919e4a8becbb22ede1032))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.18 ([#213](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/213)) ([786742e](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/786742e0d8fda7b1f482aac527da00364db1f1ae))
+
 ## [4.5.3](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.5.2...4.5.3) (2025-04-26)
 
 ### Dependency updates
