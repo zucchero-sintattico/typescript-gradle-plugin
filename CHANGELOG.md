@@ -1,3 +1,21 @@
+## [4.5.6](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.5.5...4.5.6) (2025-06-06)
+
+### Dependency updates
+
+* **core-deps:** update dependency gradle to v8.14.2 ([#238](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/238)) ([79f662d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/79f662dddbfa22079b1685463d5908f5cf02dba1))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.129 ([#229](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/229)) ([67f6709](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/67f6709e5d8c1ad5508e7e352bebb6ea81d2849a))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.131 ([#232](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/232)) ([e8a1067](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/e8a1067b63d67c08a7832da00a1555b427f095f2))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.132 ([#235](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/235)) ([5f64cc6](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/5f64cc6d0835c8a0c7a777f852c9ffb63d0d957e))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.133 ([#237](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/237)) ([6fa7cba](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/6fa7cbafd40b45fe9b39c005bbcc7c1c580829d0))
+* **deps:** update node.js to 22.16 ([#230](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/230)) ([fdce08b](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/fdce08bd5d6b8c8e6b3ff33bf6b03b620cfa03c7))
+* **deps:** update plugin com.gradle.develocity to v4.0.2 ([#233](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/233)) ([27f6b83](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/27f6b83294842ca9048a9faa78ed6178cf03c928))
+* **deps:** update plugin kotlin-qa to v0.87.1 ([#226](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/226)) ([be57655](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/be5765547f875aba0b252827f3977b6c457b6643))
+* **deps:** update plugin kotlin-qa to v0.88.0 ([#231](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/231)) ([06354cc](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/06354cc96605693a41eba7e1975232cc609b870c))
+* **deps:** update plugin kotlin-qa to v0.89.0 ([#236](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/236)) ([59edd12](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/59edd12de2fe3f5bb42ad279e85c49e8258e963a))
+* **deps:** update plugin multijvmtesting to v3.4.3 ([#227](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/227)) ([87cc03e](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/87cc03ea80047376188434b81762d1cdc9629fb2))
+* **deps:** update plugin multijvmtesting to v3.5.0 ([#234](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/234)) ([59cdd6d](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/59cdd6dd657a48d69d91ad5f23c7249ba8794523))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.25 ([#228](https://github.com/zucchero-sintattico/typescript-gradle-plugin/issues/228)) ([f7a6a5a](https://github.com/zucchero-sintattico/typescript-gradle-plugin/commit/f7a6a5a45058fa1199b954dc9c3d579f061eb23c))
+
 ## [4.5.5](https://github.com/zucchero-sintattico/typescript-gradle-plugin/compare/4.5.4...4.5.5) (2025-05-23)
 
 ### Dependency updates
